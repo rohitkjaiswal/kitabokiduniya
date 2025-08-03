@@ -10,6 +10,8 @@ import Genre from "./components/Genre";
 import AboutUs from "./components/Abouts"; 
 import Authors from "./components/Authors";
 import UploadBook from "./pages/UploadBooks";// Import Genre page
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 const App = () => {

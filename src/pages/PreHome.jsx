@@ -5,10 +5,19 @@ import nonFictionalImg from '../assets/nonFiction.webp';
 import kabirSahab from '../assets/writers/kabir-sahab.webp';
 import premchand from '../assets/writers/premchand.jpeg';
 import styles from './PreHome.module.css';
+//import DynamicHero from '../components/DynamicHero';
+import NewHero from '../components/NewHero'; // Assuming you have a NewHero component
+import Faq from '../components/Faq';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Patrika from '../components/Patrika';
+import ReadingLetter from '../components/ReadingLetter';
+
 
 function PreHome() {
     return (
         <>
+        
+        {/* <DynamicHero /> */}<NewHero />
             <div className={styles.container}>
                 <div className={styles.card}>
                     <h3>📚 Books: the only friends who don’t judge your weird search history 😅</h3>
@@ -19,9 +28,9 @@ function PreHome() {
                         🎯 Choose your adventure! 👉{' '}
                         <Link to="/genre">Pick a Genre</Link>
                     </h1>
-                    <p>🔍 Whether you're into flying broomsticks or business hacks — we've got your back.</p>
+                ,    <p>🔍 Whether you're into flying broomsticks or business hacks — we've got your back.</p>
                     <div className={styles.sectionImages}>
-                        <Link to="/genre/fiction">
+                        <Link to="/genre/">
                             <img
                                 src={fictionalImg}
                                 alt="Enter the land of imagination – Fiction"
@@ -29,7 +38,7 @@ function PreHome() {
                                 title="Click for dragons, time travel & heartbreak!"
                             />
                         </Link>
-                        <Link to="/genre/non-fiction">
+                        <Link to="/genre">
                             <img
                                 src={nonFictionalImg}
                                 alt="Fuel your brain – Non-Fiction"
@@ -48,7 +57,7 @@ function PreHome() {
                     </h1>
                     <p>🧐 Want to vibe with a mystic poet or a realist with 100 plot twists?</p>
                     <div className={styles.sectionImages}>
-                        <Link to="/author/Kabir-Sahab">
+                        <Link to="/author/">
                             <img
                                 src={kabirSahab}
                                 alt="Kabir Sahab – Mystic vibes only"
@@ -56,7 +65,7 @@ function PreHome() {
                                 title="Click to decode the universe with poetry"
                             />
                         </Link>
-                        <Link to="/author/Premchandra">
+                        <Link to="/author/">
                             <img
                                 src={premchand}
                                 alt="Premchand – Master of Desi drama"
@@ -67,8 +76,14 @@ function PreHome() {
                     </div>
                     <p>From ancient wisdom to epic storytelling — we've got the word wizards 🌟</p>
                 </div>
+                
+                <ReadingLetter/>
             </div>
-
+            
+            
+             
+            <Patrika />
+             <Faq />
             <div className={styles.footer}>
                 <h1>🚀 Welcome to Kitabo ki Duniya (aka Kitta Behai!)</h1>
                 <p>📖 Your one-stop shop for bookish happiness, dramatic plots, and existential crises.</p>

@@ -1,9 +1,13 @@
 import React from "react";
 import "./AboutUs.css"; // optional if you want custom styling
+import DynamicHero from "./DynamicHero";
 
 const AboutUs = () => {
   return (
-    <div className="container mt-5 mb-5">
+    <> <DynamicHero />
+      <div className="container mt-5 mb-5">
+       
+
       <h1 className="text-center mb-4">📖 About Us – Kitabo ki Duniya</h1>
 
       <div className="mb-4">
@@ -63,7 +67,7 @@ const AboutUs = () => {
         <h4>📮 Get in touch</h4>
         <p>
           Have feedback, book suggestions, or just want to say hi? Reach out at:{" "}
-          <a href="mailto:hello@kitabokiduniya.com">hello@kitabokiduniya.com</a> <br />
+          <a href="mailto:rohitkumarj243@gmail..com">rohitkumarj243@gmail.com</a> <br />
           Or scream your favorite book quote into the void — I’ll probably hear it. 📢
         </p>
       </div>
@@ -71,7 +75,7 @@ const AboutUs = () => {
       <div className="text-center mt-5">
         <p>Made with ❤️ for books, chai, and people who read till 4 AM.</p>
       </div>
-    </div>
+    </div></>
   );
 };
 

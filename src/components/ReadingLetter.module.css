@@ -1,0 +1,26 @@
+/* src/components/ReadingLetter.module.css */
+
+.letterSection {
+    /* background: linear-gradient(135deg, #fdf6e3, #f5e2c8); */
+    font-family: 'Georgia', serif;
+    min-height: 60vh;
+    width: 100%;
+    display: flex;
+}
+
+.letterWrapper {
+    /* background-color: rgb(160, 174, 174); */
+    border: 1px solid #e6d3b3;
+    border-radius: 12px;
+    max-width: 100%;
+    width: 100%;
+    padding: 2rem;
+    margin: 2rem auto;
+}
+
+.letterText {
+    color: #3e2f1c;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    text-align: justify;
+}

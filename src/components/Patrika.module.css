@@ -1,0 +1,42 @@
+/* src/components/Patrika.module.css */
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    /* background: linear-gradient(to bottom right, #ffecd2, #fcb69f); */
+    font-family: 'Georgia', serif;
+    overflow: hidden;
+    position: relative;
+    padding: 2rem;
+    border-radius: 20px;
+}
+
+.patrikaBox {
+    width: 400px;
+    padding: 2rem;
+    background: #fff9f0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    text-align: center;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    border: 2px solid #c97b63;
+    position: relative;
+    z-index: 10;
+}
+
+.title {
+    font-size: 1.5rem;
+    color: #6b240c;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.message {
+    font-size: 1.1rem;
+    color: #3e1f0d;
+    line-height: 1.5;
+}

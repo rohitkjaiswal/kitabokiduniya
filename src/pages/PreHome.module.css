@@ -5,7 +5,7 @@
     padding: 30px;
     max-width: 1200px;
     margin: 0 auto;
-    background-color: #fffaf0;
+    /* background-color: #fffaf0; */
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     animation: fadeIn 0.8s ease-in-out;
@@ -33,7 +33,7 @@
 }
 
 .section {
-    background-color: #fefefe;
+    /* background-color: #cc2828; */
     padding: 30px;
     border-radius: 12px;
     text-align: center;
