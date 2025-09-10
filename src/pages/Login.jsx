@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import "./Login.module.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -61,7 +60,8 @@ const Login = () => {
 
   return (
     <div>
-      <div className="container" style={{ maxWidth: "400px", margin: "auto", padding: "20px", boxShadow: "10px 10px 20px rgba(0,0,0,0.1)", alignItems: "center",justifyContent: "center", backgroundColor: "#f9f9f9" , borderRadius: "10px" ,flexWrap: "wrap",alignSelf: "center"}}> 
+      <center>
+      <div style={{ maxWidth: "400px", margin: "auto", padding: "20px", boxShadow: "10px 10px 20px rgba(0,0,0,0.1)", alignItems: "center",justifyContent: "center", backgroundColor: "#f9f9f9" , borderRadius: "10px" ,flexWrap: "wrap",alignSelf: "center"}}> 
         <center>
         <img
           src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
@@ -122,6 +122,7 @@ const Login = () => {
           </div>
         )}
       </div>
+      </center>
     </div>
   );
 };

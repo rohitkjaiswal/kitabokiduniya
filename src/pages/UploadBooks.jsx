@@ -1,6 +1,9 @@
+// src/components/UploadBook.jsx
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { db } from "../firebaseConfig";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const UploadBook = () => {
   const { user } = useAuth();
@@ -14,13 +17,22 @@ const UploadBook = () => {
     description: "",
   });
 
-  const genres = ["Fiction", "Non-Fiction", "Poetry", "Drama", "Romance", "Thriller"];
+  const [loading, setLoading] = useState(false);
+
+  const genres = [
+    "Fiction",
+    "Non-Fiction",
+    "Poetry",
+    "Drama",
+    "Romance",
+    "Thriller",
+  ];
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!user) {
@@ -29,24 +41,42 @@ const UploadBook = () => {
       return;
     }
 
-    // Here, you'd typically POST to a backend or update Firebase
-    console.log("📚 Book uploaded:", formData);
-    alert("Book uploaded successfully (not really, just a demo 😅)");
+    setLoading(true);
+    try {
+      await addDoc(collection(db, "books"), {
+        ...formData,
+        uploadedBy: user.uid,
+        uploaderEmail: user.email,
+        createdAt: serverTimestamp(),
+      });
 
-    setFormData({
-      title: "",
-      author: "",
-      genre: "",
-      link: "",
-      description: "",
-    });
+      alert("✅ Book uploaded successfully!");
+      navigate("/profile"); // Redirect to books list
+
+      // Reset form
+      setFormData({
+        title: "",
+        author: "",
+        genre: "",
+        link: "",
+        description: "",
+      });
+    } catch (error) {
+      console.error("🔥 Error uploading book:", error);
+      alert("Something went wrong while uploading. Try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="container mt-5">
       <h2 className="mb-4 text-center">📤 Upload a Book</h2>
 
-      <form onSubmit={handleSubmit} className="p-4 shadow-sm border rounded bg-light">
+      <form
+        onSubmit={handleSubmit}
+        className="p-4 shadow-sm border rounded bg-light"
+      >
         <div className="mb-3">
           <label className="form-label">📖 Book Title</label>
           <input
@@ -84,7 +114,9 @@ const UploadBook = () => {
           >
             <option value="">Select a genre</option>
             {genres.map((g, i) => (
-              <option key={i} value={g}>{g}</option>
+              <option key={i} value={g}>
+                {g}
+              </option>
             ))}
           </select>
         </div>
@@ -114,8 +146,8 @@ const UploadBook = () => {
           ></textarea>
         </div>
 
-        <button type="submit" className="btn btn-success">
-          🚀 Upload Book
+        <button type="submit" className="btn btn-success" disabled={loading}>
+          {loading ? "⏳ Uploading..." : "🚀 Upload Book"}
         </button>
       </form>
     </div>

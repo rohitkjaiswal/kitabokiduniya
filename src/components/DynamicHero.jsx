@@ -51,7 +51,7 @@ const DynamicHero = () => {
 
   return (
     <div
-      className="vh-100 vw-100 d-flex justify-content-center align-items-center position-relative overflow-hidden"
+      className="vh-50 vw-50 d-flex justify-content-center align-items-center position-relative overflow-hidden"
       style={{ background: bgColor }}
     >
       {/* Overlay */}
@@ -134,8 +134,8 @@ const DynamicHero = () => {
       </AnimatePresence>
 
       {/* Navigation */}
-      <div className="position-absolute bottom-0 mb-4 d-flex gap-3 z-3">
-        <button onClick={handlePrev} className="btn btn-light btn-sm rounded-pill px-4 shadow">
+      <div className="position-absolute bottom-0 mb-4 d-flex gap-3">
+        <button onClick={handlePrev} className="btn btn-light btn-sm rounded-pill px-4 shadow x-3">
           ⬅ Prev
         </button>
         <button onClick={handleNext} className="btn btn-light btn-sm rounded-pill px-4 shadow">

@@ -1,4 +1,6 @@
-const authorsData = [{
+// src/data/authorsData.js
+
+export const authorsData = [{
         name: "Kabir Sahab",
         description: "The OG wisdom dropper. Rhymes + philosophy = 🧠💥",
         books: [
@@ -20,9 +22,7 @@ const authorsData = [{
         books: [
             { title: "Midnight Masala", link: "https://drive.google.com/your-masala-link" },
         ],
-
     },
-
     {
         name: "Osho",
         description: "Writes self-help books that actually help. (No, really!)",
@@ -64,7 +64,6 @@ const authorsData = [{
             { title: "The Bachelor of Arts", link: "https://drive.google.com/your-history-link-2" },
         ],
     },
-    // Add more authors here...
 ];
 
 export default authorsData;

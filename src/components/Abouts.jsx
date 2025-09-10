@@ -1,10 +1,9 @@
 import React from "react";
 import "./AboutUs.css"; // optional if you want custom styling
-import DynamicHero from "./DynamicHero";
 
 const AboutUs = () => {
   return (
-    <> <DynamicHero />
+    <> 
       <div className="container mt-5 mb-5">
        
 

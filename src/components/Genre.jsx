@@ -1,24 +1,57 @@
 // src/components/Genre.jsx
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import booksByGenre from "../data/booksByGenre";
+import { fetchBooksByGenre } from "../data/booksByGenre"; // Firestore fetcher
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useAuth } from "../context/AuthContext"; // Make sure this is correct
+import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Genre = () => {
   const [selectedGenre, setSelectedGenre] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
+  const [dynamicGenres, setDynamicGenres] = useState([]); // Firestore se aayenge
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const allBooks = Object.entries(booksByGenre).flatMap(([genre, books]) =>
+  // 🔥 Firestore + static merge
+  useEffect(() => {
+  const loadGenres = async () => {
+    try {
+      const uploadedGenres = await fetchBooksByGenre(); // Firestore fetch
+      setDynamicGenres(Array.isArray(uploadedGenres) ? uploadedGenres : []);
+    } catch (error) {
+      console.error("❌ Firestore fetch error:", error);
+      setDynamicGenres([]); // fallback
+    }
+  };
+  loadGenres();
+}, []);
+
+  // Static genres normalize
+  const staticBooks = Object.entries(booksByGenre).flatMap(([genre, books]) =>
     books.map((book) => ({ ...book, genre }))
   );
 
+  // Firestore genres normalize (⚡ Fix: spread the book object)
+  const firestoreBooks = Array.isArray(dynamicGenres)
+  ? dynamicGenres.flatMap((g) =>
+      g.books.map((title) => ({
+        title,
+        genre: g.genre,
+        link: g.link || "#", // Agar Firestore me link hai to yahan add karna
+      }))
+    )
+  : [];
+
+  // Dono ko merge
+  const allBooks = [...staticBooks, ...firestoreBooks];
+
+  // Filter logic
   const filteredBooks = allBooks.filter((book) => {
     const matchGenre = selectedGenre === "All" || book.genre === selectedGenre;
-    const matchSearch = book.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchSearch = book.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
     return matchGenre && matchSearch;
   });
 
@@ -44,7 +77,12 @@ const Genre = () => {
             onChange={(e) => setSelectedGenre(e.target.value)}
           >
             <option value="All">All Genres</option>
-            {Object.keys(booksByGenre).map((genre) => (
+            {[
+              ...new Set([
+                ...Object.keys(booksByGenre),
+                ...dynamicGenres.map((g) => g.genre),
+              ]),
+            ].map((genre) => (
               <option key={genre} value={genre}>
                 {genre}
               </option>

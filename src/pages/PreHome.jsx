@@ -11,24 +11,26 @@ import Faq from '../components/Faq';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Patrika from '../components/Patrika';
 import ReadingLetter from '../components/ReadingLetter';
+import DynamicHero from '../components/DynamicHero';
 
 
 function PreHome() {
     return (
         <>
-        
-        {/* <DynamicHero /> */}<NewHero />
+            {/* <DynamicHero /> */}<NewHero />
             <div className={styles.container}>
                 <div className={styles.card}>
                     <h3>📚 Books: the only friends who don’t judge your weird search history 😅</h3>
                 </div>
 
+
                 <div className={styles.section}>
-                    <h1>
+                   <center>
+                    <h1 >
                         🎯 Choose your adventure! 👉{' '}
                         <Link to="/genre">Pick a Genre</Link>
                     </h1>
-                ,    <p>🔍 Whether you're into flying broomsticks or business hacks — we've got your back.</p>
+                ,    <p style={{fontSize:"20px",fontFamily:"sans-serif", marginTop:"10px"}}>🔍 Whether you're into flying broomsticks or business hacks — we've got your back.</p>
                     <div className={styles.sectionImages}>
                         <Link to="/genre/">
                             <img
@@ -47,7 +49,7 @@ function PreHome() {
                             />
                         </Link>
                     </div>
-                    <p>🎈 Fiction for the dreamers. Non-fiction for the thinkers. Or both for the overachievers 😉</p>
+                    <p className='mt-4 text-500'>🎈 Fiction for the dreamers. Non-fiction for the thinkers. Or both for the overachievers 😉</p></center>
                 </div>
 
                 <div className={styles.section}>
@@ -74,7 +76,7 @@ function PreHome() {
                             />
                         </Link>
                     </div>
-                    <p>From ancient wisdom to epic storytelling — we've got the word wizards 🌟</p>
+                    <p className='mt-3'>From ancient wisdom to epic storytelling — we've got the word wizards 🌟</p>
                 </div>
                 
                 <ReadingLetter/>
@@ -85,7 +87,7 @@ function PreHome() {
             <Patrika />
              <Faq />
             <div className={styles.footer}>
-                <h1>🚀 Welcome to Kitabo ki Duniya (aka Kitta Behai!)</h1>
+                <h1>🚀 Welcome to Kitabi </h1>
                 <p>📖 Your one-stop shop for bookish happiness, dramatic plots, and existential crises.</p>
                 <p>🧠 Come for the books. Stay for the characters who make better life choices than us.</p>
                 <p>💬 Not sure where to start? <Link to="/genre">Try a random genre</Link>, you rebel!</p>

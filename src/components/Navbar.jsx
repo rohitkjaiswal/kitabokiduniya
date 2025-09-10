@@ -1,4 +1,6 @@
+import { Navigate, NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import "./Navbar.module.css";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -10,12 +12,13 @@ const Navbar = () => {
       justifyContent: "space-between",
       alignItems: "center",
       padding: "15px 30px",
-      background: "#faf3e0",
+      
       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
       fontFamily: "'Comic Sans MS', cursive, sans-serif",
     }}>
       <h2 style={{ margin: 0, fontSize: "1.8em", color: "#4b2e83" }}>
-        📚 Kitabo ki Duniya <span style={{ fontSize: "1em" }}>– Where books smell like victory</span>
+        <NavLink to="/" style={{ textDecoration: "none", color: "#4b2e83" }}>  
+        📚 Kitabi </NavLink> <span style={{ fontSize: "1em" }}></span>
       </h2>
       
       <div>
@@ -27,27 +30,30 @@ const Navbar = () => {
             fontSize: "1em",
             color: "#444",
           }}>
-            <span>👋 Welcome, <strong>{user.email}</strong></span>
+            <span> <strong>{user.displayName || "bookist"}</strong></span>
+            <NavLink to="/searchUser"  className="btn btn-sm btn-outline-primary ms-1" style={{
+              textDecoration: "none"
+            }}>
+              Search
+            </NavLink>
             <a href="/upload" style={{
               textDecoration: "none",
-              background: "#7bdff2",
-              color: "#000",
-              padding: "8px 12px",
-              borderRadius: "5px",
-              transition: "0.3s",
-            }}>
-              🚀 Upload Book
+             
+             
+            }} className="btn btn-sm btn-outline-primary ms-1">
+              upload
             </a>
-            <button onClick={logout} style={{
-              background: "#ff6b6b",
-              color: "white",
-              border: "none",
-              padding: "8px 12px",
-              borderRadius: "5px",
-              cursor: "pointer",
-              transition: "background 0.3s",
-            }}>
-              🔒 Logout
+
+            <NavLink to="/profile" style={{
+              textDecoration: "none",
+             
+             
+            }} className="btn btn-sm btn-outline-primary ms-2">
+              Profile
+            </NavLink>
+
+            <button onClick={logout} className="btn btn-sm btn-outline-danger ms-2">
+              Logout
             </button>
           </div>
         ) : (

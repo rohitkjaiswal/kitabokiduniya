@@ -11,12 +11,18 @@ import AboutUs from "./components/Abouts";
 import Authors from "./components/Authors";
 import UploadBook from "./pages/UploadBooks";// Import Genre page
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ProfileBooks from "./pages/ProfileBooks";
+import Favorites from "./pages/Favorites";
+import UserSearch from "./pages/UserSearch";
+import EditProfile from "./pages/EditProfile";
 
 
 
 const App = () => {
   const { user } = useAuth(); // Get user from AuthContext
   return (
+    <>
+    <div className=" bg-light min-vh-100">
     <Router>
       <Navbar /> {/* Add Navbar here */}
       <Routes>
@@ -31,12 +37,18 @@ const App = () => {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/author" element={<Authors />} />
         <Route path="/upload" element={<UploadBook />} />
+        <Route path="/profile" element={<ProfileBooks />} />
+        <Route path="/favorites" element={<Favorites/>} />
+        <Route path="/searchUser" element={<UserSearch />} />
+        <Route path="/editProfile" element={user ? <EditProfile /> : <Navigate to="/login" replace />} />
 
 
         <Route path="/" element={<Navigate to="/" replace />} />
         {/* <Route path="/" element={<h1>Welcome to Book Library</h1>} /> */}
       </Routes>
     </Router>
+    </div>
+    </>
   );
 };
 
