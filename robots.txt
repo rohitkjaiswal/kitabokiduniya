@@ -1,0 +1,3 @@
+Sitemap: https://kitabokiduniya.netlify.app/sitemap.xml
+User-agent: *
+Allow: /
