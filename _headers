@@ -1,5 +1,6 @@
 /sitemap.xml
   Content-Type: application/xml
+  Cache-Control: no-cache
 
 /assets/*.webp
   Content-Type: image/webp
