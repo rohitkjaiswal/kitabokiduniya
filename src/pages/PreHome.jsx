@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import fictionalImg from '../assets/fictionalpage.webp';
 import nonFictionalImg from '../assets/nonFiction.webp';
 import kabirSahab from '../assets/writers/kabir-sahab.webp';
@@ -20,7 +20,9 @@ function PreHome() {
             {/* <DynamicHero /> */}<NewHero />
             <div className={styles.container}>
                 <div className={styles.card}>
-                    <h3>📚 Books: the only friends who don’t judge your weird search history 😅</h3>
+                    <h3>📚 Books: the only friends who don’t judge your weird search history 😅
+                        <Link className='btn' to="/miniLibrary">Go to Mini Library</Link>
+                    </h3>
                 </div>
 
 

@@ -108,9 +108,10 @@ const ProfileBooks = () => {
       <div className="container d-flex flex-row flex-wrap">
        
         <div className="card-body center text-left m-5">
+          <img className="rounded-circle align-self-center" src={profile?.photoURL || "https://th.bing.com/th/id/OIP.pDHYyL8j_5ey3eYm2Jc9bwAAAA?w=112&h=118&c=7&r=0&o=5&dpr=1.3&pid=1.7"} alt={user.displayName || "Anonymous"} />
           <center>
           <h5 className="card-title mb-3">
-            {user.displayName || "Anonymous"}
+            {user?.displayName || "Anonymous"}
           </h5>
           <p className="card-text">
             📧 {profile?.email || user.email} <br />
@@ -130,6 +131,15 @@ const ProfileBooks = () => {
             Edit Profile
           </NavLink></center>
         </div>
+
+       
+      </div>
+
+      <div className="container mt-4">
+        <hr />
+        <h3>About you </h3>
+        <p>{profile?.bio || "No bio available."}</p>
+        <hr />
       </div>
 
       {/* Books Section */}

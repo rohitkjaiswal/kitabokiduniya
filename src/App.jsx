@@ -15,6 +15,8 @@ import ProfileBooks from "./pages/ProfileBooks";
 import Favorites from "./pages/Favorites";
 import UserSearch from "./pages/UserSearch";
 import EditProfile from "./pages/EditProfile";
+import BookLibrary from "./components/BookLibrary";
+import UserProfile from "./pages/UserProfile";
 
 
 
@@ -40,7 +42,9 @@ const App = () => {
         <Route path="/profile" element={<ProfileBooks />} />
         <Route path="/favorites" element={<Favorites/>} />
         <Route path="/searchUser" element={<UserSearch />} />
+        <Route path="/miniLibrary" element={<BookLibrary />} />
         <Route path="/editProfile" element={user ? <EditProfile /> : <Navigate to="/login" replace />} />
+        <Route path="/profile/:userId" element={<UserProfile />} />
 
 
         <Route path="/" element={<Navigate to="/" replace />} />

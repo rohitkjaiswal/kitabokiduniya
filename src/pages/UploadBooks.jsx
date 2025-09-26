@@ -60,6 +60,7 @@ const UploadBook = () => {
         genre: "",
         link: "",
         description: "",
+        coverPage: "",
       });
     } catch (error) {
       console.error("🔥 Error uploading book:", error);
@@ -87,6 +88,7 @@ const UploadBook = () => {
             onChange={handleChange}
             required
             placeholder="e.g. Godaan"
+
           />
         </div>
 
@@ -144,6 +146,19 @@ const UploadBook = () => {
             onChange={handleChange}
             placeholder="Write something spicy about this book..."
           ></textarea>
+
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">📚 Cover Page URL (optional)</label>
+          <input
+            type="url"
+            className="form-control"
+            name="coverPage"
+            value={formData.coverPage}
+            onChange={handleChange}
+            placeholder="https://..."
+          />
         </div>
 
         <button type="submit" className="btn btn-success" disabled={loading}>
