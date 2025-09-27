@@ -12,6 +12,13 @@
   [headers.values]
     Content-Type = "text/plain"
 
+
+[[headers]]
+  for = "/sitemap-v2.xml"
+  [headers.values]
+    Content-Type = "application/xml"
+    Cache-Control = "no-cache"
+
 [[redirects]]
   from = "/sitemap-v2.xml"
   to = "/sitemap-v2.xml"
