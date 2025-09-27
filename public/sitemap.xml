@@ -1,14 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://kitabokiduniya.netlify.app/</loc>
+    <lastmod>2025-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
   </url>
   <url>
     <loc>https://kitabokiduniya.netlify.app/genre</loc>
   </url>
   <url>
-    <loc>https://kitabokiduniya.netlify.app/about</loc>
+    <loc>https://kitabokiduniya.netlify.app/author</loc>
   </url>
   <url>
-    <loc>https://kitabokiduniya.netlify.app/author</loc>
+    <loc>https://kitabokiduniya.netlify.app/about</loc>
   </url>
 </urlset>
