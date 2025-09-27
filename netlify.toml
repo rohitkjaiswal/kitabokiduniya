@@ -2,22 +2,30 @@
   publish = "dist"
   command = "npm run build"
 
+# --- Headers ---
 [[headers]]
-  for = "/sitemap-v2.xml"
+  for = "/sitemap.xml"
   [headers.values]
     Content-Type = "application/xml"
-
-[[headers]]
-  for = "/robots.txt"
-  [headers.values]
-    Content-Type = "text/plain"
-
+    Cache-Control = "no-cache"
 
 [[headers]]
   for = "/sitemap-v2.xml"
   [headers.values]
     Content-Type = "application/xml"
     Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain"
+
+# --- Redirects ---
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap.xml"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/sitemap-v2.xml"
@@ -31,6 +39,7 @@
   status = 200
   force = true
 
+# Keep SPA fallback at the very end
 [[redirects]]
   from = "/*"
   to = "/index.html"
