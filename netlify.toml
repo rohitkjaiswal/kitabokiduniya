@@ -7,18 +7,19 @@
   for = "/sitemap.xml"
   [headers.values]
     Content-Type = "application/xml"
-    Cache-Control = "no-cache"
+    Cache-Control = "no-cache, no-store, must-revalidate"
 
 [[headers]]
   for = "/sitemap-v2.xml"
   [headers.values]
     Content-Type = "application/xml"
-    Cache-Control = "no-cache"
+    Cache-Control = "no-cache, no-store, must-revalidate"
 
 [[headers]]
   for = "/robots.txt"
   [headers.values]
     Content-Type = "text/plain"
+    Cache-Control = "no-cache, no-store, must-revalidate"
 
 # --- Redirects ---
 [[redirects]]
