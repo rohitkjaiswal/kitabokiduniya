@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, serverTimestamp, Timestamp } from "firebase/firestore";
+import cover from "../assets/cover.webp"
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -25,6 +26,12 @@ const Register = () => {
         favorites: [],   // empty list for fav books
         readLater: [],   // empty list for read-later
         createdAt: serverTimestamp(),
+        bio:'',
+        updatedAt:serverTimestamp(),
+        gender:'',
+        dob: '',
+        currentReading:'',
+
       });
 
       // 3️⃣ Redirect
@@ -50,7 +57,7 @@ const Register = () => {
       }}
     >
       <img
-        src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+        src={cover}
         alt="Register Icon"
         style={{
           width: "70px",

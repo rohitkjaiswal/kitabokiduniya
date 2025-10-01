@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UploadBook = () => {
   const { user } = useAuth();
@@ -14,6 +15,7 @@ const UploadBook = () => {
     genre: "",
     link: "",
     description: "",
+    coverPage:'',
   });
 
   const genres = ["Fiction", "Non-Fiction", "Poetry", "Drama", "Romance", "Thriller"];
@@ -49,6 +51,7 @@ const UploadBook = () => {
         genre: "",
         link: "",
         description: "",
+        coverPage:'',
       });
     } catch (error) {
       console.error("🔥 Error uploading book:", error);
@@ -57,7 +60,7 @@ const UploadBook = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container-fluid mt-5" style={{fontSize:'40px'}}>
       <h2 className="mb-4 text-center">📤 Upload a Book</h2>
 
       <form onSubmit={handleSubmit} className="p-4 shadow-sm border rounded bg-light">
@@ -127,6 +130,20 @@ const UploadBook = () => {
             placeholder="Write something spicy about this book..."
           ></textarea>
         </div>
+
+        <div className="mb-3">
+          <label className="form-label">google Link of book cover image</label>
+          <input
+            type="url"
+            className="form-control"
+            name="link"
+            value={formData.coverPage}
+            onChange={handleChange}
+            required
+            placeholder="https://..."
+          />
+        </div>
+
 
         <button type="submit" className="btn btn-success">
           🚀 Upload Book

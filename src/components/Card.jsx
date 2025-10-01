@@ -1,8 +1,11 @@
 import { div } from "framer-motion/client";
 
-const Card = ({ children , className=""}) => (
-  <div className="container  wrapper flex-row">
-    <div className={` border shadow p-1 w-50 ${className}`}>{children}</div></div>
+
+const Card = ({ children , className="", style = {}, ...rest}) => (
+  <div className="row wrapper">
+    <div className={className} style={style} {...rest}>
+    {children}
+  </div></div>
   );
   
   const CardContent = ({ children }) => <div>{children}</div>;

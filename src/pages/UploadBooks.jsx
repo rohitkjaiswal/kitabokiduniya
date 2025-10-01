@@ -14,6 +14,7 @@ const UploadBook = () => {
     author: "",
     genre: "",
     link: "",
+    coverPage:"",
     description: "",
   });
 
@@ -26,6 +27,13 @@ const UploadBook = () => {
     "Drama",
     "Romance",
     "Thriller",
+    "Selfhelp",
+    "Love",
+    "Biography",
+    "others",
+    "Mithology",
+    "Technical",
+    "Educational",
   ];
 
   const handleChange = (e) => {

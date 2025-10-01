@@ -6,6 +6,7 @@ import { useAuth } from "./context/AuthContext";
 import { Navigate } from "react-router-dom"; // Import Navigate for redirection
 import PreHome from "./pages/PreHome";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'; 
 import Genre from "./components/Genre";
 import AboutUs from "./components/Abouts"; 
 import Authors from "./components/Authors";
@@ -17,6 +18,7 @@ import UserSearch from "./pages/UserSearch";
 import EditProfile from "./pages/EditProfile";
 import BookLibrary from "./components/BookLibrary";
 import UserProfile from "./pages/UserProfile";
+import ReadLater from "./pages/ReadLater";
 
 
 
@@ -24,7 +26,7 @@ const App = () => {
   const { user } = useAuth(); // Get user from AuthContext
   return (
     <>
-    <div className=" bg-light min-vh-100">
+    <div >
     <Router>
       <Navbar /> {/* Add Navbar here */}
       <Routes>
@@ -39,17 +41,23 @@ const App = () => {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/author" element={<Authors />} />
         <Route path="/upload" element={<UploadBook />} />
-        <Route path="/profile" element={<ProfileBooks />} />
-        <Route path="/favorites" element={<Favorites/>} />
+        
+       
+         <Route path="/profile" element={<ProfileBooks />  } />
+       <Route path="editProfile" element={user ? <EditProfile /> : <Navigate to="/login" replace />} />
+        <Route path="favorites" element={<Favorites/>} />
+        <Route path="readLater" elament={<ReadLater/>} />
+        
         <Route path="/searchUser" element={<UserSearch />} />
         <Route path="/miniLibrary" element={<BookLibrary />} />
-        <Route path="/editProfile" element={user ? <EditProfile /> : <Navigate to="/login" replace />} />
+       
         <Route path="/profile/:userId" element={<UserProfile />} />
 
 
         <Route path="/" element={<Navigate to="/" replace />} />
         {/* <Route path="/" element={<h1>Welcome to Book Library</h1>} /> */}
       </Routes>
+      
     </Router>
     </div>
     </>

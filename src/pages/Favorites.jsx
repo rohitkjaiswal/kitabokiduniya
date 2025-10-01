@@ -17,7 +17,7 @@ const Favorites = () => {
   useEffect(() => {
   if (!user || !user.uid) return;
 
-  console.log("📡 Listening for favorites of:", user.uid);
+  // console.log("📡 Listening for favorites of:", user.uid);
 
   const q = query(
     collection(db, "users", user.uid, "favorites"),
@@ -25,7 +25,7 @@ const Favorites = () => {
   );
 
   const unsubscribe = onSnapshot(q, (snapshot) => {
-    console.log("🔥 Favorites snapshot:", snapshot.docs.map((d) => d.data()));
+    // console.log("🔥 Favorites snapshot:", snapshot.docs.map((d) => d.data()));
     setFavorites(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
   });
 

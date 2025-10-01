@@ -4,12 +4,12 @@ import "./AboutUs.css"; // optional if you want custom styling
 const AboutUs = () => {
   return (
     <> 
-      <div className="container mt-5 mb-5">
+      <div className="container-fluid mt-5 mb-5 p-5" style={{fontSize:"40px"}}>
        
 
       <h1 className="text-center mb-4">📖 About Us – Kitabo ki Duniya</h1>
 
-      <div className="mb-4">
+      <div className="mb-4" style={{fontSize:"40px"}}>
         <h4>👋 Who are we?</h4>
         <p>
           Welcome to <strong>Kitabo ki Duniya</strong> – a virtual bookland where imagination runs wild,

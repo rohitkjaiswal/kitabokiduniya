@@ -10,12 +10,12 @@
 
 .letterWrapper {
     /* background-color: rgb(160, 174, 174); */
-    border: 1px solid #e6d3b3;
+    /* border: 1px solid #e6d3b3; */
     border-radius: 12px;
     max-width: 100%;
     width: 100%;
     padding: 2rem;
-    margin: 2rem auto;
+    margin: 1rem;
 }
 
 .letterText {

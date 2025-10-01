@@ -18,6 +18,10 @@ const EditProfile = () => {
     displayName: "",
     bio: "",
     photoURL: "",
+    email:'',
+    dob:'',
+    currentReading:'',
+
   });
   const [loading, setLoading] = useState(true);
 
@@ -58,6 +62,8 @@ const EditProfile = () => {
         bio: formData.bio,
         photoURL: formData.photoURL,
         updatedAt: new Date(),
+        dob:new Date(),
+        currentReading:formData.currentReading,
       });
       alert("✅ Profile updated successfully!");
       navigate(`/profile/${user.uid}`);
@@ -76,48 +82,87 @@ const EditProfile = () => {
   }
 
   return (
-    <div className="container mt-6 px-4">
+    <div className="container-fluid mt-6 px-4 p-5 my-5" style={{fontSize:"40px",color:"pink"}}>
       <h2 className="text-2xl font-bold mb-4 text-center">✏️ Edit Profile</h2>
       <form className="max-w-lg mx-auto" onSubmit={handleSave}>
-        <div className="mb-3">
+        <div className="mb-3 m-5">
           <label className="form-label">Display Name</label>
           <input
             type="text"
-            className="form-control"
+            className="form-control p-1 "
             name="displayName"
             value={formData.displayName}
             onChange={handleChange}
             placeholder="Enter your name"
-          />
+           style={{fontSize:"40px",color:'gray'}} autoFocus/>
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 m-5">
+          <label className="form-label">Email</label>
+          <input
+            type="email"
+            className="form-control p-3"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Change email"
+           style={{fontSize:"40px",color:'gray'}}  spellCheck='false'/>
+        </div>
+
+        <div className="mb-3 m-5">
           <label className="form-label">Bio</label>
           <textarea
-            className="form-control"
+            className="form-control p-2"
             name="bio"
             value={formData.bio}
             onChange={handleChange}
             placeholder="Write something about yourself..."
             rows="3"
-          />
+          style={{fontSize:"40px",color:'gray'}}/>
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 m-5">
+          <label className="form-label">Date of birth</label>
+          <input
+            type="date"
+            className="form-control p-2"
+            name="dob"
+            value={formData.dob}
+            onChange={handleChange}
+            
+          style={{fontSize:"40px",color:'gray'}}/>
+        </div>
+
+        <div className="mb-3 m-5">
           <label className="form-label">Profile Picture URL</label>
           <input
             type="text"
-            className="form-control"
+            className="form-control p-2"
             name="photoURL"
             value={formData.photoURL}
             onChange={handleChange}
             placeholder="Paste image link"
-          />
+          style={{fontSize:"40px",color:'gray'}}/>
         </div>
 
-        <button type="submit" className="btn btn-primary w-100">
+        <div className="mb-3 m-5">
+          <label className="form-label">What are you reading currently?</label>
+          <input
+            type="text"
+            className="form-control p-2"
+            name="currentReading"
+            value={formData.currentReading}
+            onChange={handleChange}
+            placeholder="Write your current read"
+          style={{fontSize:"40px",color:'gray'}}/>
+        </div>
+
+
+
+        <button type="submit" className="btn btn-outline-secondary m-1 w-100" style={{fontSize:'40px'}}>
           💾 Save Changes
         </button>
+       
       </form>
     </div>
   );

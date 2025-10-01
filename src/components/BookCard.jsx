@@ -3,19 +3,22 @@ import { Card, CardContent } from "./Card";
 import { MoreVertical } from "lucide-react";
 import BookMenu from "./BookMenu";
 import { color } from "framer-motion";
+import userBg from "../assets/userdp.jpg"
+import cover from "../assets/cover.webp"
 
 const BookCard = ({ book, onFavorite, onReadLater, onDelete, onShare, onMessage, isOwner }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   if (!book) return null;
 
-  const coverImage = book.coverPage || "https://th.bing.com/th/id/OIP.uCiS-n32wWxBCDh-NfoqJAHaEK?w=281&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3";
+  const coverImage = book.coverPage || cover;
 
   return (
-    <div className="container px-3 py-3">
+    <div className="container-fluid d-flex flex-column px-3 py-3">
+      
       <Card
-        className="card border-0 shadow-lg rounded-4 overflow-hidden position-relative"
+        className="card border-0 shadow-lg rounded-5 overflow-hidden position-relative"
         style={{
-          backgroundImage: `url(${coverImage || 'https://th.bing.com/th/id/OIP.uCiS-n32wWxBCDh-NfoqJAHaEK?w=281&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3'})`,
+          backgroundImage: `url(${coverImage || cover})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundColor:"black",
@@ -25,22 +28,22 @@ const BookCard = ({ book, onFavorite, onReadLater, onDelete, onShare, onMessage,
         onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
       >
         <CardContent
-          className="p-4"
+          className="p-4 absolute"
           style={{
             backgroundColor: "rgba(0, 0, 0, 0.6)",
             borderRadius: "0 0 16px 16px",
             minHeight: "220px",
           }}
         >
-          <div className="d-flex justify-content-between align-items-start">
+          <div className="d-flex flex-row justify-content-center align-items-start">
             <div className="flex-grow-1 p-3">
-              <h3 className="card-title" style={{fontSize: "1.75rem",fontWeight: "bold", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",color:"pink"}}>
+              <h3 className="card-title text-center" style={{fontSize: "2.75rem",fontWeight: "bold", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",color:"Red"}}>
                 {book.title || "Untitled"}
               </h3>
-              <p className="card-text">
+              <p className="card-text bg-secondary text-center text-white" style={{fontSize:'1.5rem'}}>
                 <small>by {book.author || "Unknown"}</small>
               </p>
-              <span className=" bg-success-subtle">
+              <span className=" bg-success-subtle" style={{fontSize:'2.0rem'}}>
                 {book.genre || "General"}
               </span>
             </div>
@@ -71,7 +74,7 @@ const BookCard = ({ book, onFavorite, onReadLater, onDelete, onShare, onMessage,
 
           {/* Description */}
           {book.description && (
-            <p className="mt-2 text-white-50" style={{ fontSize: "0.9rem" }}>
+            <p className="mt-2" style={{ fontWeight: "bold", color:'black',fontSize:'1.5rem' ,fontStyle:'italic'}}>
               {book.description || 'No description'}
             </p>
             
@@ -90,7 +93,29 @@ const BookCard = ({ book, onFavorite, onReadLater, onDelete, onShare, onMessage,
             </a>
           )}
 
-          <p className="text-end">{book.uploadedAt?.toDate().toLocalDateString()}</p>
+          <p className="text-end">upload on {book.uploadedAt?.toDate().toLocalDateString()}</p>
+          <p className="text-cenetr">
+                <a
+                  href={book.link}
+                  className="btn btn-primary btn-fluid mx-2 "
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Download
+                </a>
+                
+                <a
+                  href={book.link}
+                  className="btn btn-primary btn-fluid mx-2 "
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  read book
+                </a>
+              </p>
+              <p className="bg-success rounded-5 p-2" style={{fontSize: "1.875rem"}}><small>Say thanks to: <a href={`mailto:${book.uploaderEmail}`} className="text-light">{book.uploaderEmail || "Unknown Contributor"}</a> for sharing this book.</small>
+               <span> </span>Contributor's profile <a href={`/profile/${book.uploadedBy}`} className="text-light">here</a>.
+              </p>
         </CardContent>
       </Card>
     </div>

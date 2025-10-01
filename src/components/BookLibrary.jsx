@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import cover from "../assets/cover.webp"
 
 const BookLibrary = () => {
   const [books, setBooks] = useState([]);
@@ -52,7 +53,7 @@ const BookLibrary = () => {
             <div
               className="card h-100 text-white shadow-sm border-0"
               style={{
-                backgroundImage: `url(${book.coverPage ||"https://th.bing.com/th/id/OIP.pPYuzTJKrTLdgrqisZK2qQHaEo?w=238&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" })`,
+                backgroundImage: `url(${book.coverPage ||cover})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 borderRadius: "12px",

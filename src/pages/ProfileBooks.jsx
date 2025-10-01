@@ -15,10 +15,14 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
+import backimg from "../assets/cover.webp"
+
 import BookList from "../components/BookList";
 import { Navigate } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import {NavLink, Link,Outlet } from "react-router-dom";
 import Favorites from "./Favorites";
+import EditProfile from "./EditProfile";
+import profileBg from "../assets/profileBg.png";
 
 const ProfileBooks = () => {
   const { user } = useAuth();
@@ -84,9 +88,18 @@ const ProfileBooks = () => {
   };
 
   const handleShare = (book) => {
-    navigator.clipboard.writeText(book.link || window.location.href);
-    alert("🔗 Book link copied to clipboard!");
-  };
+  if (navigator.share) {
+    navigator.share({
+      title: book.title,
+      text: `Check out this book: ${book.title} by ${book.author}`,
+      url: book.link || window.location.href,
+    })
+    .then(() => console.log("Shared successfully"))
+    .catch((error) => console.error("Error sharing:", error));
+  } else {
+    alert("Sharing is not supported on this device.");
+  }
+};
 
   const handleMessage = (book) => {
     alert(`💬 Messaging about: ${book.title}`);
@@ -95,52 +108,64 @@ const ProfileBooks = () => {
 
   async function handleDelete(book) {
     if (window.confirm("Are you sure you want to delete this book?")) {
+
       await deleteDoc(doc(db, "books", book.id));
+       console.log("Delete successfully");
     }
+   
   }
 
   // -----------------------------
 
   return (
-    <div className=" mt-2 justify-content-center align-items-center">
+    <div className=" mt-2 justify-content-center align-items-center " >
       {/* Profile Card */}
 
-      <div className="container d-flex flex-row flex-wrap">
+      <div className="container-fluid d-flex flex-wrap  align-content-center " download style={{backgroundImage: `url(${profileBg})`, backgroundSize: 'cover', height:'100%'}}>
        
-        <div className="card-body center text-left m-5">
-          <img className="rounded-circle align-self-center" src={profile?.photoURL || "https://th.bing.com/th/id/OIP.pDHYyL8j_5ey3eYm2Jc9bwAAAA?w=112&h=118&c=7&r=0&o=5&dpr=1.3&pid=1.7"} alt={user.displayName || "Anonymous"} />
+        <div className="container-fluid h-full center  text-center bg-opacity-50 bg-dark p-5" >
+          
+          <img className="rounded-circle  align-self-center" src={profile?.photoURL ||backimg} alt={user.displayName || "Anonymous"} />
           <center>
-          <h5 className="card-title mb-3">
-            {user?.displayName || "Anonymous"}
+          <h5 className="card-title mb-3" style={{fontSize: "1.5rem",fontWeight: "bold", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",color:"yellow"}}>
+            {profile?.displayName || "Anonymous"}
           </h5>
-          <p className="card-text">
-            📧 {profile?.email || user.email} <br />
+          <p className="card-text " style={{fontSize: "1.2rem", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",color:"white"}}>
+             {profile?.email || 'user.email'} <br />
             📚 <b>{books.length}</b> Books uploaded
           </p>
-
-          <NavLink
+          <Link
             to="/favorites"
-            className="btn btn-sm btn-outline-primary ms-2"
-          >
+            className="btn btn-sm btn-primary text-decoration-none"
+            style={{fontSize: "1.2rem"}}>
             View favorite books
+
+          </Link >
+          <NavLink  to="/readLater"
+            className="btn btn-sm btn-secondary text-decoration-none mx-3"
+            style={{fontSize: "1.2rem"}}>
+             readLater
           </NavLink>
+         
           <NavLink
             to="/editProfile"
-            className="btn btn-sm btn-outline-primary ms-2"
-          >
+            className="btn btn-sm btn-secondary ms-2 text-decoration-none"
+          style={{fontSize: "1.2rem" }}>
             Edit Profile
-          </NavLink></center>
+          </NavLink>
+         
+          </center>
         </div>
 
        
       </div>
 
-      <div className="container mt-4">
+      {/* <div className="container-fluid mt-4"> */}
+        
+        <h3 className="ps-5">About me </h3>
+        <p className="ps-5">{profile?.bio || "No bio available."}</p>
         <hr />
-        <h3>About you </h3>
-        <p>{profile?.bio || "No bio available."}</p>
-        <hr />
-      </div>
+      {/* </div> */}
 
       {/* Books Section */}
       <h3 className="text-xl font-semibold mb-2 text-center">

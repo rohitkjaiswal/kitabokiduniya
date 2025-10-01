@@ -2,18 +2,17 @@ import { useEffect, useRef } from "react";
 import { Star, Bookmark, Share2, Trash2, MessageCircle } from "lucide-react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const BookMenu = ({ 
-  onFavorite, 
-  onReadLater, 
-  onDelete, 
-  onShare, 
-  onMessage, 
-  isOwner = false, 
-  onClose 
+const BookMenu = ({
+  onFavorite,
+  onReadLater,
+  onDelete,
+  onShare,
+  onMessage,
+  isOwner = false,
+  onClose
 }) => {
   const menuRef = useRef(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -27,40 +26,38 @@ const BookMenu = ({
   return (
     <div
       ref={menuRef}
-      className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg border border-gray-200 z-50"
+      className="position-absolute end-0 mt-2 bg-white border rounded-4 shadow-lg z-3"
+      style={{ width: "220px", animation: "fadeIn 0.3s ease-in-out" }}
     >
       <ul className="list-unstyled m-0 p-2">
-        <MenuItem 
-          icon={<Star className="w-4 h-4 text-blue-500" />} 
-          label="Add to Favorites" 
-          onClick={onFavorite} 
+        <MenuItem
+          icon={<Star size={18} className="text-primary" />}
+          label="Add to Favorites"
+          onClick={onFavorite}
         />
-        <MenuItem 
-          icon={<Bookmark className="w-4 h-4 text-blue-500" />} 
-          label="Read Later" 
-          onClick={onReadLater} 
+        <MenuItem
+          icon={<Bookmark size={18} className="text-primary" />}
+          label="Read Later"
+          onClick={onReadLater}
         />
-        <MenuItem 
-          icon={<Share2 className="w-4 h-4 text-green-500" />} 
-          label="Share" 
-          onClick={onShare} 
+        <MenuItem
+          icon={<Share2 size={18} className="text-success" />}
+          label="Share"
+          onClick={onShare}
         />
-        <MenuItem 
-          icon={<MessageCircle className="w-4 h-4 text-purple-500" />} 
-          label="Message" 
-          onClick={onMessage} 
+        <MenuItem
+          icon={<MessageCircle size={18} className="text-info" />}
+          label="Message"
+          onClick={onMessage}
         />
-        {isOwner && (
+       
           <MenuItem
-            icon={<Trash2 className="w-4 h-4 text-red-500" />}
+            icon={<Trash2 size={18} className="text-danger" />}
             label="Delete"
-            onClick={(e) => {
-              e.stopPropagation(); // 🔒 Prevents accidental triggers
-              onDelete?.();
-            }}
+            onClick={(book) => onDelete?.(book)}
             danger
           />
-        )}
+      
       </ul>
     </div>
   );
@@ -70,18 +67,21 @@ const MenuItem = ({ icon, label, onClick, danger }) => (
   <li>
     <button
       onClick={(e) => {
-        e.stopPropagation(); // Prevents parent click events
+        e.stopPropagation();
         onClick?.();
       }}
-      className={`d-flex align-items-center gap-2 w-100 text-start px-3 py-2 rounded transition 
-        ${danger 
-          ? "text-danger hover-bg-light" 
-          : "text-dark hover-bg-light"
-        }`}
-      style={{ background: "transparent", border: "none" }}
+      className={`d-flex align-items-center gap-3 w-100 text-start px-3 py-2 rounded-3 border-0 ${
+        danger ? "text-danger" : "text-dark"
+      }`}
+      style={{
+        backgroundColor: "transparent",
+        transition: "background-color 0.2s ease",
+      }}
+      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f8f9fa")}
+      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
     >
       {icon}
-      <span>{label}</span>
+      <span className="fw-medium">{label}</span>
     </button>
   </li>
 );

@@ -8,6 +8,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import dp from "../assets/cover.webp"
 
 const UserSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -74,7 +75,7 @@ const UserSearch = () => {
             >
               <div className="card shadow-sm h-100 text-center">
                 <img
-                  src={user.photoURL || "https://via.placeholder.com/150"}
+                  src={user.photoURL || dp}
                   alt={user.displayName}
                   className="card-img-top rounded-circle mx-auto mt-3"
                   style={{ width: "100px", height: "100px", objectFit: "cover" }}

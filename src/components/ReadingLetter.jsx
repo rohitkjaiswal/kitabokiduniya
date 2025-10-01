@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const ReadingLetter = () => {
   return (
     <section className={`${styles.letterSection} py-5`}>
-      <div className="container">
+      <div className="container" >
         <div className={`${styles.letterWrapper} p-4 shadow-lg`}>
           <h2 className="text-center mb-4 text-dark">A Letter to the Reader 📜</h2>
           <p className={`${styles.letterText}`}>

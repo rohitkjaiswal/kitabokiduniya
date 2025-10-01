@@ -1,105 +1,194 @@
-import React from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import fictionalImg from '../assets/fictionalpage.webp';
-import nonFictionalImg from '../assets/nonFiction.webp';
-import kabirSahab from '../assets/writers/kabir-sahab.webp';
-import premchand from '../assets/writers/premchand.jpeg';
-import styles from './PreHome.module.css';
+import React from "react";
+import { Link, Navigate } from "react-router-dom";
+import fictionalImg from "../assets/fictionalpage.webp";
+import nonFictionalImg from "../assets/userdp.jpg";
+import kabirSahab from "../assets/writers/kabir-sahab.webp";
+import premchand from "../assets/writers/premchand.jpeg";
+import styles from "./PreHome.module.css";
 //import DynamicHero from '../components/DynamicHero';
-import NewHero from '../components/NewHero'; // Assuming you have a NewHero component
-import Faq from '../components/Faq';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Patrika from '../components/Patrika';
-import ReadingLetter from '../components/ReadingLetter';
-import DynamicHero from '../components/DynamicHero';
+import NewHero from "../components/NewHero"; // Assuming you have a NewHero component
+import Faq from "../components/Faq";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Patrika from "../components/Patrika";
+import ReadingLetter from "../components/ReadingLetter";
+import DynamicHero from "../components/DynamicHero";
+import TopContributors from "../components/TopContributors";
+import img01 from "../assets/img01.jpg"
+import img02 from "../assets/img02.jpg"
+import img03 from "../assets/img03.jpg"
+import img04 from "../assets/img04.jpg"
 
+
+
+
+// import "./HomeCrousel.css";
 
 function PreHome() {
-    return (
-        <>
-            {/* <DynamicHero /> */}<NewHero />
-            <div className={styles.container}>
-                <div className={styles.card}>
-                    <h3>📚 Books: the only friends who don’t judge your weird search history 😅
-                        <Link className='btn' to="/miniLibrary">Go to Mini Library</Link>
-                    </h3>
-                </div>
+  return (
+    <>
+      {/* <DynamicHero /> */}
+      <NewHero />
 
+      <div >
+        <div className={styles.card}>
+          <h3>
+            📚 Books: the only friends who don’t judge your weird search history
+            😅
+            <Link className="btn" to="/miniLibrary">
+              Go to Mini Library
+            </Link>
+          </h3>
+        </div>
 
-                <div className={styles.section}>
-                   <center>
-                    <h1 >
-                        🎯 Choose your adventure! 👉{' '}
-                        <Link to="/genre">Pick a Genre</Link>
-                    </h1>
-                ,    <p style={{fontSize:"20px",fontFamily:"sans-serif", marginTop:"10px"}}>🔍 Whether you're into flying broomsticks or business hacks — we've got your back.</p>
-                    <div className={styles.sectionImages}>
-                        <Link to="/genre/">
-                            <img
-                                src={fictionalImg}
-                                alt="Enter the land of imagination – Fiction"
-                                className={styles.image}
-                                title="Click for dragons, time travel & heartbreak!"
-                            />
-                        </Link>
-                        <Link to="/genre">
-                            <img
-                                src={nonFictionalImg}
-                                alt="Fuel your brain – Non-Fiction"
-                                className={styles.image}
-                                title="Click for wisdom, facts & TED-talk vibes!"
-                            />
-                        </Link>
-                    </div>
-                    <p className='mt-4 text-500'>🎈 Fiction for the dreamers. Non-fiction for the thinkers. Or both for the overachievers 😉</p></center>
-                </div>
+        <TopContributors />
 
-                <div className={styles.section}>
-                    <h1>
-                        🖋️ Meet the Legends 👉{' '}
-                        <Link to="/author">Choose an Author</Link>
-                    </h1>
-                    <p>🧐 Want to vibe with a mystic poet or a realist with 100 plot twists?</p>
-                    <div className={styles.sectionImages}>
-                        <Link to="/author/">
-                            <img
-                                src={kabirSahab}
-                                alt="Kabir Sahab – Mystic vibes only"
-                                className={styles.image}
-                                title="Click to decode the universe with poetry"
-                            />
-                        </Link>
-                        <Link to="/author/">
-                            <img
-                                src={premchand}
-                                alt="Premchand – Master of Desi drama"
-                                className={styles.image}
-                                title="Click for heartbreak, revolution, and chai-worthy plots"
-                            />
-                        </Link>
-                    </div>
-                    <p className='mt-3'>From ancient wisdom to epic storytelling — we've got the word wizards 🌟</p>
-                </div>
-                
-                <ReadingLetter/>
+        <div className="container-fluid d-flex flex-direction-row justify-content-center flex-wrap" style={{flexDirection:'column'}}>
+
+        <div className="container-fluid "style={{background:`url(${nonFictionalImg})`,backgroundColor:'black'}}>
+          <h2 className="text-center fw-bold mb-4 text-white">📚 Explore Genres</h2>
+          <div
+            id="genreCarousel"
+            className="carousel slide w-50 justify-center"
+            data-bs-ride="carousel"
+          >
+            <div className="carousel-inner rounded shadow-sm ">
+              <div className="carousel-item active">
+                <Link to="/genre">
+                  <img
+                    src={img02}
+                    className="d-block w-100"
+                    alt="Fiction"
+                  />
+                  <div className="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+                    <h5>Fiction</h5>
+                    <p>Time travel, heartbreak & dragons await</p>
+                  </div>
+                </Link>
+              </div>
+              <div className="carousel-item">
+                <Link to="/genre">
+                  <img
+                    src={img01}
+                    className="d-block w-100"
+                    alt="Non-Fiction"
+                  />
+                  <div className="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+                    <h5>Non-Fiction</h5>
+                    <p>Facts, wisdom & TED-talk vibes</p>
+                  </div>
+                </Link>
+              </div>
+              <div className="carousel-item">
+                <Link to="/genre">
+                  <img
+                    src={img03}
+                    className="d-block w-100"
+                    alt="Poetry"
+                  />
+                  <div className="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+                    <h5>Poetry</h5>
+                    <p>Decode the universe with rhythm</p>
+                  </div>
+                </Link>
+              </div>
             </div>
-            
-            
-             
-            <Patrika />
-             <Faq />
-            <div className={styles.footer}>
-                <h1>🚀 Welcome to Kitabi </h1>
-                <p>📖 Your one-stop shop for bookish happiness, dramatic plots, and existential crises.</p>
-                <p>🧠 Come for the books. Stay for the characters who make better life choices than us.</p>
-                <p>💬 Not sure where to start? <Link to="/genre">Try a random genre</Link>, you rebel!</p>
-                <p>
-                    Wanna know who’s behind the scenes? Visit our mysterious{' '}
-                    <Link to="/about">About Us</Link> page.
-                </p>
-            </div>
-        </>
-    );
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#genreCarousel"
+              data-bs-slide="prev"
+            >
+              <span className="carousel-control-prev-icon" />
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#genreCarousel"
+              data-bs-slide="next"
+            >
+              <span className="carousel-control-next-icon" />
+            </button>
+          </div>
+          <h1 className="text-end">
+           
+          </h1>
+        </div>
+
+        <div className="container">
+          <h2 className="text-center fw-bold mb-4">🖋️ Meet the Legends</h2>
+          <div className="contaiiner-fluid d-flex flex-wrap flex-direction-column" >
+            {[
+              {
+                name: "Kabir Sahab",
+                img: kabirSahab,
+                bio: "Mystic poet with cosmic insights",
+                link: "/author",
+              },
+              {
+                name: "Premchand",
+                img: premchand,
+                bio: "Master of Desi drama and realism",
+                link: "/author",
+              },
+              
+              
+            ].map((author, idx) => (
+              <div className="col-md-4 mb-4 p-3" key={idx} style={{width:'330px'}}>
+                <Link to={author.link}>
+                  <div className="card shadow-sm">
+                    <div className="flip-card-inner">
+                      <div className="flip-card-front">
+                        <img
+                          src={author.img}
+                          className="card-img-top rounded mh-3" 
+                          alt={author.name}
+                         style={{height:'300px',width:'300px'}}/>
+                        <div className="card-body text-center">
+                          <h5 className="card-title">{author.name}</h5>
+                        </div>
+                      </div>
+                      <div className=" d-flex align-items-center justify-content-center">
+                        <p className="text p-3">{author.bio}</p>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        </div>
+
+
+        </div>
+        
+        
+        <ReadingLetter/>
+       
+      <Patrika/>
+      <Faq />
+      <div className={styles.footer}>
+        <h1>🚀 Welcome to Kitabi </h1>
+        <p>
+          📖 Your one-stop shop for bookish happiness, dramatic plots, and
+          existential crises.
+        </p>
+        <p>
+          🧠 Come for the books. Stay for the characters who make better life
+          choices than us.
+        </p>
+        <p>
+          💬 Not sure where to start?{" "}
+          <Link to="/genre">Try a random genre</Link>, you rebel!
+        </p>
+        <p>
+          Wanna know who’s behind the scenes? Visit our mysterious{" "}
+          <Link to="/about">About Us</Link> page.
+        </p>
+      </div>
+    </>
+  );
 }
 
 export default PreHome;

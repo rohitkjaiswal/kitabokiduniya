@@ -23,13 +23,13 @@ const Authors = () => {
   );
 
   return (
-    <div className="container mt-5 mb-5">
+    <div className="container-fluid mt-5 mb-5 p-5" >
       <h2 className="text-center mb-4">✍️ Authors & Their Legendary Books</h2>
 
-      <div className="mb-4">
+      <div className="mb-4 p-5">
         <input
           type="text"
-          className="form-control"
+          className="form-control p-3"
           placeholder="Search authors... (even fictional ones)"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

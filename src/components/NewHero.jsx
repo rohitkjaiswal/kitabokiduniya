@@ -43,7 +43,7 @@ const CreativeHero = () => {
 
   return (
     <div
-      className="container-sm vh-100 w-full   position-relative overflow-hidden d-flex justify-content-center align-items-center p-2 mt-2"
+      className="container-fluid vh-100 w-full   position-relative overflow-hidden d-flex justify-content-center align-items-center p-2 mt-2"
       style={{ background: bgGradient }}
     >
       {/* Overlay */}
@@ -59,7 +59,7 @@ const CreativeHero = () => {
         animate={{ x: 0, scale: 1, opacity: 1 }}
         exit={{ x: 300, opacity: 0 }}
         transition={{ duration: 1.5, ease: 'easeOut' }}
-        className="position-absolute"
+        className="position-absolute container-fluid"
         style={{
           width: '500px',
           height: '500px',
