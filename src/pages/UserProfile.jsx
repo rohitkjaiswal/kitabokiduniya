@@ -151,7 +151,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="container py-2" >
+    <div className="container py-2">
       <div className="card shadow-lg border-0 mb-5 p-3 rounded">
         <div className="row g-0">
           <div className="col-md-4 d-flex align-items-center justify-content-center bg-light flex-wrap">
@@ -159,11 +159,11 @@ const UserProfile = () => {
               src={user.photoURL || cover}
               alt="User Avatar"
               className="img rounded-circle"
-              style={{ objectFit: "cover",height:'150px',width:'150px' }}
+              style={{ objectFit: "cover", height: "150px", width: "150px" }}
             />
           </div>
           <div className="col-md-8 p-1 text-center">
-            <div className="card-body" style={{fontStyle:'inherit'}}>
+            <div className="card-body" style={{ fontStyle: "inherit" }}>
               <h5
                 className="card-title text-primary"
                 style={{ fontWeight: "bold" }}
@@ -176,20 +176,27 @@ const UserProfile = () => {
                 <span style={{ color: "red" }}>{user.currentReading}</span>
               </p>
               <p className="card-text text-start">
-                <small>{`Wish me on ${user.dob
-                  ?.toDate()
-                  .toLocaleDateString()}`}</small>
-              
-                {" "}
+                <small>{`Wish me on ${
+                  user.dob
+                    ? user.dob.toDate
+                      ? user.dob.toDate().toLocaleDateString()
+                      : new Date(user.dob).toLocaleDateString()
+                    : "not available"
+                }`}</small>{" "}
                 <br />
                 Uploaded books : <strong>{books.length}</strong>
                 <br />
-             {user.bio}
-             <br />
-             
-                <small className="text-muted">{`Joined on ${user.createdAt
-                  ?.toDate()
-                  .toLocaleDateString()}`}</small>
+                {user.bio}
+                <br />
+                <small className="text-muted">
+                  {`Joined on ${
+                    user.createdAt
+                      ? user.createdAt.toDate
+                        ? user.createdAt.toDate().toLocaleDateString()
+                        : new Date(user.createdAt).toLocaleDateString()
+                      : "Not Provided"
+                  }`}
+                </small>
               </p>
               <p className="card-text text-end">
                 {" "}
@@ -213,14 +220,14 @@ const UserProfile = () => {
       <div className="row">
         {books.length > 0 ? (
           <BookList
-        books={books}
-        currentUser={user.uid}
-        onFavorite={handleFavorite}
-        onReadLater={handleReadLater}
-        onDelete={(()=>alert('you are not uplader!'))}
-        onShare={handleShare}
-        onMessage={(()=>alert('this feature will be provide soon'))}
-      />
+            books={books}
+            currentUser={user.uid}
+            onFavorite={handleFavorite}
+            onReadLater={handleReadLater}
+            onDelete={() => alert("you are not uplader!")}
+            onShare={handleShare}
+            onMessage={() => alert("this feature will be provide soon")}
+          />
         ) : (
           <p className="text-muted">No books uploaded yet.</p>
         )}
