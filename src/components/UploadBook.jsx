@@ -60,7 +60,7 @@ const UploadBook = () => {
   };
 
   return (
-    <div className="container-fluid mt-5" style={{fontSize:'40px'}}>
+    <div className="container-fluid mt-5" >
       <h2 className="mb-4 text-center">📤 Upload a Book</h2>
 
       <form onSubmit={handleSubmit} className="p-4 shadow-sm border rounded bg-light">
@@ -139,7 +139,7 @@ const UploadBook = () => {
             name="link"
             value={formData.coverPage}
             onChange={handleChange}
-            required
+            
             placeholder="https://..."
           />
         </div>

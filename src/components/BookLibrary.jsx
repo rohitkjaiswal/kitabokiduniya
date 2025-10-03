@@ -2,10 +2,14 @@ import { useState } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import cover from "../assets/cover.webp"
+import { use } from "framer-motion/m";
+import {easeInOut, motion} from 'motion/react'
+
 
 const BookLibrary = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
+  
 
   async function fetchBooks() {
     setLoading(true);
@@ -23,6 +27,21 @@ const BookLibrary = () => {
     }
   }
 
+  const handleShare = (book) => {
+  if (navigator.share) {
+    navigator.share({
+      title: book.title,
+      text: `Check out this book: ${book.title} by ${book.author}`,
+      url: book.link || window.location.href,
+    })
+    .then(() => console.log("Shared successfully"))
+    .catch((error) => console.error("Error sharing:", error));
+  } else {
+    alert("Sharing is not supported on this device.");
+  }
+};
+
+ 
   return (
     <div className="container py-5">
       <div className="text-center mb-4">
@@ -49,7 +68,7 @@ const BookLibrary = () => {
 
       <div className="row">
         {books.map((book) => (
-          <div key={book.id} className="col-md-6 col-lg-4 mb-4">
+          <motion.div key={book.id} initial={{opacity:0,y:-100}} whileInView={{opacity:1,y:0}} transition={{duration:1,property:'easeInOut'}} className="col-md-6 col-lg-4 mb-4">
             <div
               className="card h-100 text-white shadow-sm border-0"
               style={{
@@ -68,10 +87,14 @@ const BookLibrary = () => {
                   height: "100%",
                 }}
               >
-                <h5 className="card-title" style={{fontSize: "1.75rem",fontWeight: "bold", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",color:"pink"}}>{book.title || "Unknown Title"}</h5>
+                <h5 className="card-title" style={{fontWeight: "bold", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",color:"pink"}}>{book.title || "Unknown Title"}</h5>
                 <p className="card-text">
                   <strong>Author:</strong> {book.author || "Unknown"}
                 </p>
+
+
+                 
+
                 <p className="card-text">
                     <strong>Genre:</strong> {book.genre || "Various"}
                 </p>
@@ -91,14 +114,20 @@ const BookLibrary = () => {
                 <button className="btn btn-outline-light btn-sm mt-2 ms-2" onClick={() => alert(`You chose to read: ${book.title}`)}>
                   Read
                 </button>
+                <button className="btn btn-outline-light btn-sm mt-2 ms-2" onClick={handleShare}>
+                  share
+                </button>
               </p>
-              <p style={{fontSize: "0.875rem", color: "rgba(22, 243, 29, 0.7)"}}><small>Say thanks to: <a href={`mailto:${book.uploaderEmail}`} className="text-light">{book.uploaderEmail || "Unknown Contributor"}</a> for sharing this book.</small>
+              <p style={{ color: "rgba(22, 243, 29, 0.7)"}}><small>Say thanks to: <a href={`mailto:${book.uploaderEmail}`} className="text-light">{book.uploaderEmail || "Unknown Contributor"}</a> for sharing this book.</small>
               visit contributor's profile <a href={`/profile/${book.uploadedBy}`} className="text-light">here</a>.
               </p>
               </div>
             </div>
-          </div>
+            
+          </motion.div>
+          
         ))}
+        
       </div>
     </div>
   );

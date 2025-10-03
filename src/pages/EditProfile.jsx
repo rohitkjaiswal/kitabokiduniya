@@ -82,7 +82,7 @@ const EditProfile = () => {
   }
 
   return (
-    <div className="container-fluid mt-6 px-4 p-5 my-5" style={{fontSize:"40px",color:"pink"}}>
+    <div className="container-fluid mt-6 px-4 p-5 my-5" style={{color:"pink"}}>
       <h2 className="text-2xl font-bold mb-4 text-center">✏️ Edit Profile</h2>
       <form className="max-w-lg mx-auto" onSubmit={handleSave}>
         <div className="mb-3 m-5">
@@ -94,7 +94,7 @@ const EditProfile = () => {
             value={formData.displayName}
             onChange={handleChange}
             placeholder="Enter your name"
-           style={{fontSize:"40px",color:'gray'}} autoFocus/>
+           style={{color:'gray'}} autoFocus/>
         </div>
 
         <div className="mb-3 m-5">
@@ -106,7 +106,7 @@ const EditProfile = () => {
             value={formData.email}
             onChange={handleChange}
             placeholder="Change email"
-           style={{fontSize:"40px",color:'gray'}}  spellCheck='false'/>
+           style={{color:'gray'}}  spellCheck='false'/>
         </div>
 
         <div className="mb-3 m-5">
@@ -118,7 +118,7 @@ const EditProfile = () => {
             onChange={handleChange}
             placeholder="Write something about yourself..."
             rows="3"
-          style={{fontSize:"40px",color:'gray'}}/>
+          style={{color:'gray'}}/>
         </div>
 
         <div className="mb-3 m-5">
@@ -130,7 +130,7 @@ const EditProfile = () => {
             value={formData.dob}
             onChange={handleChange}
             
-          style={{fontSize:"40px",color:'gray'}}/>
+          style={{color:'gray'}}/>
         </div>
 
         <div className="mb-3 m-5">
@@ -142,7 +142,7 @@ const EditProfile = () => {
             value={formData.photoURL}
             onChange={handleChange}
             placeholder="Paste image link"
-          style={{fontSize:"40px",color:'gray'}}/>
+          style={{color:'gray'}}/>
         </div>
 
         <div className="mb-3 m-5">
@@ -154,12 +154,12 @@ const EditProfile = () => {
             value={formData.currentReading}
             onChange={handleChange}
             placeholder="Write your current read"
-          style={{fontSize:"40px",color:'gray'}}/>
+          style={{color:'gray'}}/>
         </div>
 
 
 
-        <button type="submit" className="btn btn-outline-secondary m-1 w-100" style={{fontSize:'40px'}}>
+        <button type="submit" className="btn btn-outline-secondary m-1 w-100" >
           💾 Save Changes
         </button>
        

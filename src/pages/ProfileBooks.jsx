@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 
 import backimg from "../assets/cover.webp"
+import {motion} from 'motion/react'
 
 import BookList from "../components/BookList";
 import { Navigate } from "react-router-dom";
@@ -64,26 +65,68 @@ const ProfileBooks = () => {
   // -----------------------------
 
   const handleFavorite = async (book) => {
+    if (!user) {
+      alert("🔐 Please log in first!");
+      return;
+    }
+  
+    if (!book.id) {
+      // Generate a safe unique ID
+      book.id = `${book.title.replace(/\s+/g, "_")}_${book.genre}`;
+    }
+  
+    const favRef = doc(db, "users", user.uid, "favorites", book.id);
+  
     try {
-      await setDoc(doc(db, "users", user.uid, "favorites", book.id), {
-        ...book,
-        savedAt: serverTimestamp(),
-      });
-      alert(`⭐ Added "${book.title}" to Favorites`);
+      const favSnap = await getDoc(favRef);
+  
+      if (favSnap.exists()) {
+        // Already favorited → remove
+        await deleteDoc(favRef);
+        alert(`❌ Removed "${book.title}" from Favorites`);
+      } else {
+        // Not favorited → add
+        await setDoc(favRef, {
+          ...book,
+          savedAt: serverTimestamp(),
+        });
+        alert(`⭐ Added "${book.title}" to Favorites`);
+      }
     } catch (err) {
-      console.error("Error adding to favorites:", err);
+      console.error("Error toggling favorite:", err);
     }
   };
-
+  
   const handleReadLater = async (book) => {
+    if (!user) {
+      alert("🔐 Please log in first!");
+      return;
+    }
+  
+    if (!book.id) {
+      // Generate a safe unique ID
+      book.id = `${book.title.replace(/\s+/g, "_")}_${book.genre}`;
+    }
+  
+    const readLaterRef = doc(db, "users", user.uid, "readLater", book.id);
+  
     try {
-      await setDoc(doc(db, "users", user.uid, "readLater", book.id), {
-        ...book,
-        savedAt: serverTimestamp(),
-      });
-      alert(`📌 Saved "${book.title}" for later`);
+      const snap = await getDoc(readLaterRef);
+  
+      if (snap.exists()) {
+        // Already saved → remove
+        await deleteDoc(readLaterRef);
+        alert(`❌ Removed "${book.title}" from Read Later`);
+      } else {
+        // Not saved → add
+        await setDoc(readLaterRef, {
+          ...book,
+          savedAt: serverTimestamp(),
+        });
+        alert(`📌 Saved "${book.title}" for later`);
+      }
     } catch (err) {
-      console.error("Error adding to read later:", err);
+      console.error("Error toggling Read Later:", err);
     }
   };
 
@@ -118,40 +161,40 @@ const ProfileBooks = () => {
   // -----------------------------
 
   return (
-    <div className=" mt-2 justify-content-center align-items-center " >
+    <motion.div initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{duration:2,property:'easeInOut'}} className=" mt-1 justify-content-center align-items-center " >
       {/* Profile Card */}
 
-      <div className="container-fluid d-flex flex-wrap  align-content-center " download style={{backgroundImage: `url(${profileBg})`, backgroundSize: 'cover', height:'100%'}}>
+      <div className="container d-flex flex-wrap  align-content-center " download style={{backgroundImage: `url(${profileBg})`, backgroundSize: 'cover'}}>
        
-        <div className="container-fluid h-full center  text-center bg-opacity-50 bg-dark p-5" >
+        <div className="container center  text-center bg-opacity-50 bg-dark " >
           
-          <img className="rounded-circle  align-self-center" src={profile?.photoURL ||backimg} alt={user.displayName || "Anonymous"} />
+          <img style={{width:'150px'}}  className="rounded-circle  align-self-center" src={profile?.photoURL ||backimg} alt={user.displayName || "Anonymous"} />
           <center>
-          <h5 className="card-title mb-3" style={{fontSize: "1.5rem",fontWeight: "bold", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",color:"yellow"}}>
+          <h5 className="card-title mb-3" style={{fontWeight: "bold", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",color:"yellow"}}>
             {profile?.displayName || "Anonymous"}
           </h5>
-          <p className="card-text " style={{fontSize: "1.2rem", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",color:"white"}}>
+          <p className="card-text " style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",color:"white"}}>
              {profile?.email || 'user.email'} <br />
             📚 <b>{books.length}</b> Books uploaded
           </p>
           <Link
             to="/favorites"
-            className="btn btn-sm btn-primary text-decoration-none"
-            style={{fontSize: "1.2rem"}}>
+            className="btn btn-sm btn-primary text-decoration-none mx-1 my-1"
+           >
             View favorite books
 
           </Link >
           <NavLink  to="/readLater"
-            className="btn btn-sm btn-secondary text-decoration-none mx-3"
-            style={{fontSize: "1.2rem"}}>
+            className="btn btn-sm btn-secondary text-decoration-none mx-1 my-1"
+            >
              readLater
           </NavLink>
          
           <NavLink
             to="/editProfile"
-            className="btn btn-sm btn-secondary ms-2 text-decoration-none"
-          style={{fontSize: "1.2rem" }}>
-            Edit Profile
+            className="btn btn-sm btn-secondary ms-2 text-decoration-none mx-1 my-1"
+          >
+            Edit
           </NavLink>
          
           </center>
@@ -160,12 +203,12 @@ const ProfileBooks = () => {
        
       </div>
 
-      {/* <div className="container-fluid mt-4"> */}
+      <div className="container mt-4">
         
         <h3 className="ps-5">About me </h3>
         <p className="ps-5">{profile?.bio || "No bio available."}</p>
         <hr />
-      {/* </div> */}
+       </div> 
 
       {/* Books Section */}
       <h3 className="text-xl font-semibold mb-2 text-center">
@@ -174,14 +217,14 @@ const ProfileBooks = () => {
 
       <BookList
         books={books}
-        currentUser={user}
+        currentUser={user.uid}
         onFavorite={handleFavorite}
         onReadLater={handleReadLater}
         onDelete={handleDelete}
         onShare={handleShare}
         onMessage={handleMessage}
       />
-    </div>
+    </motion.div>
   );
 };
 

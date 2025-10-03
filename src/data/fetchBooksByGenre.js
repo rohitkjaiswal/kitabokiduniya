@@ -30,7 +30,7 @@ export const fetchBooksByGenre = async() => {
                 description: description || "",
                 uploaderEmail: uploaderEmail || "Unknown",
                 uploadedBy: uploadedBy || "anonymous",
-                createdAt: createdAt || 'anonymous',
+
             });
         });
 

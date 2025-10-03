@@ -4,6 +4,7 @@ import { useState } from "react";
 import "./Navbar.module.css";
 import { Book } from "lucide-react";
 import BookLibrary from "./BookLibrary";
+import {easeInOut, motion} from 'motion/react'
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -42,7 +43,7 @@ const Navbar = () => {
           className="collapse navbar-collapse justify-content-end outline-none text-decoration-none "
           id="navbarContent"
         >
-          <ul className="navbar-nav align-items-center gap-2 ">
+          <motion.ul initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{duration:2,property:'easeInOut'}} className="navbar-nav align-items-center gap-2 ">
             {/* <li className="nav-item">
               <button
                 onClick={toggleDarkMode}
@@ -55,7 +56,7 @@ const Navbar = () => {
 
             {user ? (
               <>
-                <li className="nav-item dropdown justify-content-end">
+                <motion.li initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{duration:2,property:'easeInOut'}} className="nav-item dropdown justify-content-end">
                   <a
                     className="nav-link dropdown-toggle d-flex align-items-center text-decoration-none"
                     href="/profile"
@@ -112,6 +113,18 @@ const Navbar = () => {
                         📚 Your Library
                       </NavLink>
                     </li>
+
+                    <li>
+                      <NavLink
+                        to="/about"
+                        className="dropdown-item text-decoration-none"
+                      >
+                        Know about kitabi
+                      </NavLink>
+                    </li>
+
+
+
                     <hr />
                     <li>
                       <button
@@ -122,11 +135,11 @@ const Navbar = () => {
                       </button>
                     </li>
                   </ul>
-                </li>
+                </motion.li>
               </>
             ) : (
               <>
-                <div className="<container d-flex flex-direction-column">
+                <motion.div initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{duration:2,property:'easeInOut'}} className="container d-flex flex-direction-column">
                   <li className="nav-item ">
                     <NavLink
                       to="/login"
@@ -143,10 +156,10 @@ const Navbar = () => {
                       ✍️ Register
                     </NavLink>
                   </li>
-                </div>
+                </motion.div>
               </>
             )}
-          </ul>
+          </motion.ul>
         </div>
       </div>
     </nav>

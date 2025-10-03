@@ -156,6 +156,8 @@ const handleReadLater = async (book) => {
     console.error("Error toggling Read Later:", err);
   }
 };
+
+
   const handleShare = (book) => {
   if (navigator.share) {
     navigator.share({
@@ -207,6 +209,7 @@ const handleReadLater = async (book) => {
       </div>
 
       {/* Book List */}
+      <div className="grow">
       <BookList
   books={filteredBooks}        // ✅ Filtered & merged books
   currentUser={user}           // ✅ Current logged in user
@@ -215,7 +218,7 @@ const handleReadLater = async (book) => {
   onDelete={''}
   onShare={handleShare}
   onMessage={'handleMessage'}
-/>
+/></div>
 
     </div>
   );

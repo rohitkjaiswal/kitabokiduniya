@@ -4,12 +4,12 @@ import "./AboutUs.css"; // optional if you want custom styling
 const AboutUs = () => {
   return (
     <> 
-      <div className="container-fluid mt-5 mb-5 p-5" style={{fontSize:"40px"}}>
+      <div className="container-fluid mt-5 mb-5 p-5" >
        
 
       <h1 className="text-center mb-4">📖 About Us – Kitabo ki Duniya</h1>
 
-      <div className="mb-4" style={{fontSize:"40px"}}>
+      <div className="mb-4" >
         <h4>👋 Who are we?</h4>
         <p>
           Welcome to <strong>Kitabo ki Duniya</strong> – a virtual bookland where imagination runs wild,
@@ -66,7 +66,12 @@ const AboutUs = () => {
         <h4>📮 Get in touch</h4>
         <p>
           Have feedback, book suggestions, or just want to say hi? Reach out at:{" "}
-          <a href="mailto:rohitkumarj243@gmail..com">rohitkumarj243@gmail.com</a> <br />
+          <br />Eamil :  
+          <a href="mailto:rohitkumarj243@gmail.com"> kitabiTouch@gmail.com</a>
+          <br />
+          Instagram : <a href="">kitabiOfficial</a> 
+          <br />
+          Whatsapps : <a href="">kitabiTouchCommunity</a> <br />
           Or scream your favorite book quote into the void — I’ll probably hear it. 📢
         </p>
       </div>

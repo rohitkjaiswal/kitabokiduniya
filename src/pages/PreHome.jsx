@@ -17,13 +17,14 @@ import img01 from "../assets/img01.jpg"
 import img02 from "../assets/img02.jpg"
 import img03 from "../assets/img03.jpg"
 import img04 from "../assets/img04.jpg"
-
+import { easeIn, easeInOut, easeOut, motion, useScroll } from "motion/react"
 
 
 
 // import "./HomeCrousel.css";
 
 function PreHome() {
+  
   return (
     <>
       {/* <DynamicHero /> */}
@@ -40,11 +41,11 @@ function PreHome() {
           </h3>
         </div>
 
-        <TopContributors />
+        <TopContributors/>
 
         <div className="container-fluid d-flex flex-direction-row justify-content-center flex-wrap" style={{flexDirection:'column'}}>
 
-        <div className="container-fluid "style={{background:`url(${nonFictionalImg})`,backgroundColor:'black'}}>
+        <motion.div initial={{opacity: 0 ,x:-200}} whileInView={{ opacity: 1 ,x:0}}  transition={{duration:2,property:easeInOut}} className="container-fluid "style={{background:`url(${nonFictionalImg})`,backgroundColor:'black'}}>
           <h2 className="text-center fw-bold mb-4 text-white">📚 Explore Genres</h2>
           <div
             id="genreCarousel"
@@ -112,9 +113,9 @@ function PreHome() {
           <h1 className="text-end">
            
           </h1>
-        </div>
+        </motion.div>
 
-        <div className="container">
+        <motion.div  initial={{opacity:0,y:-100}} whileInView={{opacity:1,y:0}}  transition={{duration:1,property:easeInOut}} className="container">
           <h2 className="text-center fw-bold mb-4">🖋️ Meet the Legends</h2>
           <div className="contaiiner-fluid d-flex flex-wrap flex-direction-column" >
             {[
@@ -133,16 +134,17 @@ function PreHome() {
               
               
             ].map((author, idx) => (
-              <div className="col-md-4 mb-4 p-3" key={idx} style={{width:'330px'}}>
+              <motion.div initial={{opacity:0,x:200}} whileInView={{opacity:1,x:0}} transition={{duration:2,property:'easeInOut'}}  className="col-md-4 mb-4 p-3" key={idx} style={{width:'330px'}}>
                 <Link to={author.link}>
                   <div className="card shadow-sm">
                     <div className="flip-card-inner">
                       <div className="flip-card-front">
-                        <img
+                        <motion.img 
+                        initial={{opacity:0,scale:0}} whileInView={{opacity:1,scale:1}} whileHover={{scale:0.9}} transition={{duration:2,property:'easeInOut'}}
                           src={author.img}
-                          className="card-img-top rounded mh-3" 
+                          className="card-img-top rounded mh-3 " 
                           alt={author.name}
-                         style={{height:'300px',width:'300px'}}/>
+                         style={{height:'300px',width:'100%'}}/>
                         <div className="card-body text-center">
                           <h5 className="card-title">{author.name}</h5>
                         </div>
@@ -153,10 +155,10 @@ function PreHome() {
                     </div>
                   </div>
                 </Link>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         </div>
 

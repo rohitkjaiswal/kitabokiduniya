@@ -7,7 +7,8 @@ const BookList = ({ books, onFavorite, onReadLater, onDelete, onShare, onMessage
   }
 
   return (
-    <div className="container-fluid d-flex flex-column flex-wrap ">
+        <div className="container py-5">
+          <div className="row">
       {books.map((book) => (
         <BookCard
           key={book.id}
@@ -21,6 +22,8 @@ const BookList = ({ books, onFavorite, onReadLater, onDelete, onShare, onMessage
         />
       ))}
     </div>
+    </div>
+    
   );
 };
 

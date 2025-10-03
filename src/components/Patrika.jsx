@@ -1,6 +1,6 @@
 // src/components/Patrika.jsx
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import patrikaMessages from "../data/patrikaMessages";
 import styles from "./Patrika.module.css";
 
@@ -25,7 +25,7 @@ const Patrika = () => {
   }, []);
 
   return (
-    <div className={styles.wrapper}>
+    <motion.div initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{duration:2,property:'easeInOut'}} className={styles.wrapper}>
       <h2 className={styles.title} style={{ fontSize: "2rem", marginBottom: "1rem", color: "purple" }}> Messages for You</h2>
 
       <AnimatePresence mode="wait">
@@ -41,7 +41,7 @@ const Patrika = () => {
           <p className={styles.message}>{patrikaMessages[index].message}</p>
         </motion.div>
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 

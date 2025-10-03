@@ -14,6 +14,7 @@
         "firebase": "^11.4.0",
         "framer-motion": "^12.23.12",
         "lucide-react": "^0.541.0",
+        "motion": "^12.23.22",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-head": "^3.4.2",

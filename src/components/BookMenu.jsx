@@ -24,41 +24,47 @@ const BookMenu = ({
   }, [onClose]);
 
   return (
+
     <div
       ref={menuRef}
-      className="position-absolute end-0 mt-2 bg-white border rounded-4 shadow-lg z-3"
+      className="position-absolute bg-secondary end-0 mt-2 border rounded-4 shadow-lg z-3"
       style={{ width: "220px", animation: "fadeIn 0.3s ease-in-out" }}
     >
-      <ul className="list-unstyled m-0 p-2">
-        <MenuItem
-          icon={<Star size={18} className="text-primary" />}
-          label="Add to Favorites"
-          onClick={onFavorite}
-        />
-        <MenuItem
-          icon={<Bookmark size={18} className="text-primary" />}
-          label="Read Later"
-          onClick={onReadLater}
-        />
-        <MenuItem
-          icon={<Share2 size={18} className="text-success" />}
-          label="Share"
-          onClick={onShare}
-        />
-        <MenuItem
-          icon={<MessageCircle size={18} className="text-info" />}
-          label="Message"
-          onClick={onMessage}
-        />
-       
-          <MenuItem
-            icon={<Trash2 size={18} className="text-danger" />}
-            label="Delete"
-            onClick={(book) => onDelete?.(book)}
-            danger
-          />
-      
-      </ul>
+
+      <ul className="list-unstyled m-0 p-2 ">
+  <MenuItem 
+    icon={<Star size={18} className="text-primary" />}
+    label="Add to Favorites"
+    onClick={onFavorite}
+    
+  />
+  <MenuItem
+    icon={<Bookmark size={18} className="text-primary" />}
+    label="Read Later"
+    onClick={onReadLater}
+  />
+  <MenuItem
+    icon={<Share2 size={18} className="text-success" />}
+    label="Share"
+    onClick={onShare}
+  />
+  <MenuItem
+    icon={<MessageCircle size={18} className="text-info" />}
+    label="Message"
+    onClick={onMessage}
+  />
+  
+  {isOwner && (
+    <MenuItem
+      icon={<Trash2 size={18} className="text-danger" />}
+      label="Delete"
+      onClick={onDelete}
+      danger
+    />
+  )}
+</ul>
+
+        
     </div>
   );
 };
@@ -70,7 +76,7 @@ const MenuItem = ({ icon, label, onClick, danger }) => (
         e.stopPropagation();
         onClick?.();
       }}
-      className={`d-flex align-items-center gap-3 w-100 text-start px-3 py-2 rounded-3 border-0 ${
+      className={`d-flex align-items-center gap-3 w-100 text-start px-2 py-1 rounded-3 border-0 ${
         danger ? "text-danger" : "text-dark"
       }`}
       style={{
