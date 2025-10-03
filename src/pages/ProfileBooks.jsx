@@ -20,7 +20,7 @@ import {motion} from 'motion/react'
 
 import BookList from "../components/BookList";
 import { Navigate } from "react-router-dom";
-import {NavLink, Link,Outlet } from "react-router-dom";
+import {NavLink, Link } from "react-router-dom";
 import Favorites from "./Favorites";
 import EditProfile from "./EditProfile";
 import profileBg from "../assets/profileBg.png";
@@ -65,84 +65,85 @@ const ProfileBooks = () => {
   // -----------------------------
 
   const handleFavorite = async (book) => {
-    if (!user) {
-      alert("🔐 Please log in first!");
-      return;
-    }
-  
-    if (!book.id) {
-      // Generate a safe unique ID
-      book.id = `${book.title.replace(/\s+/g, "_")}_${book.genre}`;
-    }
-  
-    const favRef = doc(db, "users", user.uid, "favorites", book.id);
-  
-    try {
-      const favSnap = await getDoc(favRef);
-  
-      if (favSnap.exists()) {
-        // Already favorited → remove
-        await deleteDoc(favRef);
-        alert(`❌ Removed "${book.title}" from Favorites`);
-      } else {
-        // Not favorited → add
-        await setDoc(favRef, {
-          ...book,
-          savedAt: serverTimestamp(),
-        });
-        alert(`⭐ Added "${book.title}" to Favorites`);
-      }
-    } catch (err) {
-      console.error("Error toggling favorite:", err);
-    }
-  };
-  
-  const handleReadLater = async (book) => {
-    if (!user) {
-      alert("🔐 Please log in first!");
-      return;
-    }
-  
-    if (!book.id) {
-      // Generate a safe unique ID
-      book.id = `${book.title.replace(/\s+/g, "_")}_${book.genre}`;
-    }
-  
-    const readLaterRef = doc(db, "users", user.uid, "readLater", book.id);
-  
-    try {
-      const snap = await getDoc(readLaterRef);
-  
-      if (snap.exists()) {
-        // Already saved → remove
-        await deleteDoc(readLaterRef);
-        alert(`❌ Removed "${book.title}" from Read Later`);
-      } else {
-        // Not saved → add
-        await setDoc(readLaterRef, {
-          ...book,
-          savedAt: serverTimestamp(),
-        });
-        alert(`📌 Saved "${book.title}" for later`);
-      }
-    } catch (err) {
-      console.error("Error toggling Read Later:", err);
-    }
-  };
-
-  const handleShare = (book) => {
-  if (navigator.share) {
-    navigator.share({
-      title: book.title,
-      text: `Check out this book: ${book.title} by ${book.author}`,
-      url: book.link || window.location.href,
-    })
-    .then(() => console.log("Shared successfully"))
-    .catch((error) => console.error("Error sharing:", error));
-  } else {
-    alert("Sharing is not supported on this device.");
-  }
-};
+   if (!user) {
+     alert("🔐 Please log in first!");
+     return;
+   }
+ 
+   if (!book.id) {
+     // Generate a safe unique ID
+     book.id = `${book.title.replace(/\s+/g, "_")}_${book.genre}`;
+   }
+ 
+   const favRef = doc(db, "users", user.uid, "favorites", book.id);
+ 
+   try {
+     const favSnap = await getDoc(favRef);
+ 
+     if (favSnap.exists()) {
+       // Already favorited → remove
+       await deleteDoc(favRef);
+       alert(`❌ Removed "${book.title}" from Favorites`);
+     } else {
+       // Not favorited → add
+       await setDoc(favRef, {
+         ...book,
+         savedAt: serverTimestamp(),
+       });
+       alert(`⭐ Added "${book.title}" to Favorites`);
+     }
+   } catch (err) {
+     console.error("Error toggling favorite:", err);
+   }
+ };
+ 
+ const handleReadLater = async (book) => {
+   if (!user) {
+     alert("🔐 Please log in first!");
+     return;
+   }
+ 
+   if (!book.id) {
+     // Generate a safe unique ID
+     book.id = `${book.title.replace(/\s+/g, "_")}_${book.genre}`;
+   }
+ 
+   const readLaterRef = doc(db, "users", user.uid, "readLater", book.id);
+ 
+   try {
+     const snap = await getDoc(readLaterRef);
+ 
+     if (snap.exists()) {
+       // Already saved → remove
+       await deleteDoc(readLaterRef);
+       alert(`❌ Removed "${book.title}" from Read Later`);
+     } else {
+       // Not saved → add
+       await setDoc(readLaterRef, {
+         ...book,
+         savedAt: serverTimestamp(),
+       });
+       alert(`📌 Saved "${book.title}" for later`);
+     }
+   } catch (err) {
+     console.error("Error toggling Read Later:", err);
+   }
+ };
+ 
+ 
+   const handleShare = (book) => {
+   if (navigator.share) {
+     navigator.share({
+       title: book.title,
+       text: `Check out this book: ${book.title} by ${book.author}`,
+       url: book.link || window.location.href,
+     })
+     .then(() => console.log("Shared successfully"))
+     .catch((error) => console.error("Error sharing:", error));
+   } else {
+     alert("Sharing is not supported on this device.");
+   }
+ };
 
   const handleMessage = (book) => {
     alert(`💬 Messaging about: ${book.title}`);
@@ -184,11 +185,11 @@ const ProfileBooks = () => {
             View favorite books
 
           </Link >
-          <NavLink  to="/readLater"
+          <Link  to="/readLater"
             className="btn btn-sm btn-secondary text-decoration-none mx-1 my-1"
             >
              readLater
-          </NavLink>
+          </Link>
          
           <NavLink
             to="/editProfile"

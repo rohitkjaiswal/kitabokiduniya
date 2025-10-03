@@ -79,7 +79,7 @@ const BookCard = ({
                     onFavorite={() => onFavorite(book)}
                     onReadLater={() => onReadLater(book)}
                     onDelete={() => onDelete(book)}
-                    onShare={() => onShare(book)}
+                    onShare={() => handleShare(book)}
                     onMessage={() => onMessage(book)}
                   />
                 </div>

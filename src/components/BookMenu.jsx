@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Star, Bookmark, Share2, Trash2, MessageCircle } from "lucide-react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -23,6 +23,13 @@ const BookMenu = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [onClose]);
 
+  const [active, setActive]=useState(false);
+  const handleClick=(()=>{
+    if(!active){
+      setActive(true);
+    }
+  })
+
   return (
 
     <div
@@ -33,7 +40,7 @@ const BookMenu = ({
 
       <ul className="list-unstyled m-0 p-2 ">
   <MenuItem 
-    icon={<Star size={18} className="text-primary" />}
+    icon={<Star size={18} className={`active? text-danger:text-dark`} onClick={handleClick} />}
     label="Add to Favorites"
     onClick={onFavorite}
     

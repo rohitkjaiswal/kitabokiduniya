@@ -11,7 +11,7 @@ export const fetchBooksByGenre = async() => {
 
         snapshot.forEach((doc) => {
             const data = doc.data();
-            const { title, genre, link, coverPage, description, uploaderEmail, uploadedBy } = data;
+            const { title, author, genre, link, coverPage, description, uploaderEmail, uploadedBy } = data;
 
             if (!genreMap[genre]) {
                 genreMap[genre] = {
@@ -23,8 +23,10 @@ export const fetchBooksByGenre = async() => {
 
             // push book object
             const titleStr = typeof title === "string" ? title : "Untitled Book";
+            const authorstr = typeof author === 'string' ? author : 'Unknown';
             genreMap[genre].books.push({
                 title: titleStr,
+                author: authorstr,
                 link: link || "#",
                 coverPage: coverPage || null,
                 description: description || "",

@@ -4,12 +4,24 @@ import { db } from "../firebaseConfig";
 import cover from "../assets/cover.webp"
 import { use } from "framer-motion/m";
 import {easeInOut, motion} from 'motion/react'
-
+import BookList from "./BookList";
+import { useAuth } from "../context/AuthContext";
+import {
+  
+  onSnapshot,
+  query,
+  orderBy,
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp,
+  deleteDoc
+} from "firebase/firestore";
 
 const BookLibrary = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+  const {user}=useAuth();
 
   async function fetchBooks() {
     setLoading(true);
@@ -27,19 +39,86 @@ const BookLibrary = () => {
     }
   }
 
-  const handleShare = (book) => {
-  if (navigator.share) {
-    navigator.share({
-      title: book.title,
-      text: `Check out this book: ${book.title} by ${book.author}`,
-      url: book.link || window.location.href,
-    })
-    .then(() => console.log("Shared successfully"))
-    .catch((error) => console.error("Error sharing:", error));
-  } else {
-    alert("Sharing is not supported on this device.");
-  }
-};
+ const handleFavorite = async (book) => {
+   if (!user) {
+     alert("🔐 Please log in first!");
+     return;
+   }
+ 
+   if (!book.id) {
+     // Generate a safe unique ID
+     book.id = `${book.title.replace(/\s+/g, "_")}_${book.genre}`;
+   }
+ 
+   const favRef = doc(db, "users", user.uid, "favorites", book.id);
+ 
+   try {
+     const favSnap = await getDoc(favRef);
+ 
+     if (favSnap.exists()) {
+       // Already favorited → remove
+       await deleteDoc(favRef);
+       alert(`❌ Removed "${book.title}" from Favorites`);
+     } else {
+       // Not favorited → add
+       await setDoc(favRef, {
+         ...book,
+         savedAt: serverTimestamp(),
+       });
+       alert(`⭐ Added "${book.title}" to Favorites`);
+     }
+   } catch (err) {
+     console.error("Error toggling favorite:", err);
+   }
+ };
+ 
+ const handleReadLater = async (book) => {
+   if (!user) {
+     alert("🔐 Please log in first!");
+     return;
+   }
+ 
+   if (!book.id) {
+     // Generate a safe unique ID
+     book.id = `${book.title.replace(/\s+/g, "_")}_${book.genre}`;
+   }
+ 
+   const readLaterRef = doc(db, "users", user.uid, "readLater", book.id);
+ 
+   try {
+     const snap = await getDoc(readLaterRef);
+ 
+     if (snap.exists()) {
+       // Already saved → remove
+       await deleteDoc(readLaterRef);
+       alert(`❌ Removed "${book.title}" from Read Later`);
+     } else {
+       // Not saved → add
+       await setDoc(readLaterRef, {
+         ...book,
+         savedAt: serverTimestamp(),
+       });
+       alert(`📌 Saved "${book.title}" for later`);
+     }
+   } catch (err) {
+     console.error("Error toggling Read Later:", err);
+   }
+ };
+ 
+ 
+   const handleShare = (book) => {
+   if (navigator.share) {
+     navigator.share({
+       title: book.title,
+       text: `Check out this book: ${book.title} by ${book.author}`,
+       url: book.link || window.location.href,
+     })
+     .then(() => console.log("Shared successfully"))
+     .catch((error) => console.error("Error sharing:", error));
+   } else {
+     alert("Sharing is not supported on this device.");
+   }
+ };
 
  
   return (
@@ -67,66 +146,17 @@ const BookLibrary = () => {
       </div>
 
       <div className="row">
-        {books.map((book) => (
-          <motion.div key={book.id} initial={{opacity:0,y:-100}} whileInView={{opacity:1,y:0}} transition={{duration:1,property:'easeInOut'}} className="col-md-6 col-lg-4 mb-4">
-            <div
-              className="card h-100 text-white shadow-sm border-0"
-              style={{
-                backgroundImage: `url(${book.coverPage ||cover})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                borderRadius: "12px",
-                overflow: "hidden",
-              }}
-            >
-              <div
-                className="card-body"
-                style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.6)",
-                  padding: "1rem",
-                  height: "100%",
-                }}
-              >
-                <h5 className="card-title" style={{fontWeight: "bold", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",color:"pink"}}>{book.title || "Unknown Title"}</h5>
-                <p className="card-text">
-                  <strong>Author:</strong> {book.author || "Unknown"}
-                </p>
+        <BookList
+  books={books}        // ✅ Filtered & merged books
+  currentUser={''}           // ✅ Current logged in user
+  onFavorite={handleFavorite}
+  onReadLater={handleReadLater}
+  onDelete={''}
+  onShare={handleShare}
+  onMessage={'handleMessage'}
+/>
 
 
-                 
-
-                <p className="card-text">
-                    <strong>Genre:</strong> {book.genre || "Various"}
-                </p>
-                {book.description && (
-                  <p className="card-text">{book.description || "No description available."}</p>
-                )}
-                <p>
-                <a
-                  href={book.link}
-                  className="btn btn-outline-light btn-sm mt-2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Download
-                </a>
-                
-                <button className="btn btn-outline-light btn-sm mt-2 ms-2" onClick={() => alert(`You chose to read: ${book.title}`)}>
-                  Read
-                </button>
-                <button className="btn btn-outline-light btn-sm mt-2 ms-2" onClick={handleShare}>
-                  share
-                </button>
-              </p>
-              <p style={{ color: "rgba(22, 243, 29, 0.7)"}}><small>Say thanks to: <a href={`mailto:${book.uploaderEmail}`} className="text-light">{book.uploaderEmail || "Unknown Contributor"}</a> for sharing this book.</small>
-              visit contributor's profile <a href={`/profile/${book.uploadedBy}`} className="text-light">here</a>.
-              </p>
-              </div>
-            </div>
-            
-          </motion.div>
-          
-        ))}
         
       </div>
     </div>

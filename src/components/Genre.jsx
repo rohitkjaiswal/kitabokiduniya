@@ -218,7 +218,8 @@ const handleReadLater = async (book) => {
   onDelete={''}
   onShare={handleShare}
   onMessage={'handleMessage'}
-/></div>
+/>
+</div>
 
     </div>
   );
