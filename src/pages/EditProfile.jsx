@@ -22,6 +22,7 @@ const EditProfile = () => {
     dob:'',
     currentReading:'',
 
+
   });
   const [loading, setLoading] = useState(true);
 
@@ -64,6 +65,7 @@ const EditProfile = () => {
         updatedAt: new Date(),
         dob:new Date(),
         currentReading:formData.currentReading,
+        
       });
       alert("✅ Profile updated successfully!");
       navigate(`/profile/${user.uid}`);
@@ -157,6 +159,9 @@ const EditProfile = () => {
           style={{color:'gray'}}/>
         </div>
 
+        
+          
+          
 
 
         <button type="submit" className="btn btn-outline-secondary m-1 w-100" >
