@@ -22,25 +22,23 @@
     Cache-Control = "no-cache, no-store, must-revalidate"
 
 # --- Redirects ---
+# Ensure sitemap and robots.txt bypass SPA fallback completely
 [[redirects]]
   from = "/sitemap.xml"
   to = "/sitemap.xml"
   status = 200
-  force = true
 
 [[redirects]]
   from = "/sitemap-v2.xml"
   to = "/sitemap-v2.xml"
   status = 200
-  force = true
 
 [[redirects]]
   from = "/robots.txt"
   to = "/robots.txt"
   status = 200
-  force = true
 
-# Keep SPA fallback at the very end
+# SPA fallback must remain last
 [[redirects]]
   from = "/*"
   to = "/index.html"
