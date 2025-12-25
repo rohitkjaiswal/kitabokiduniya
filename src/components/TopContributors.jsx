@@ -15,7 +15,9 @@ const TopContributors = () => {
       const counts = {};
       snapshot.forEach(doc => {
         const data = doc.data();
-        const uploader = data.uploadedBy || data.uploaderEmail || "Unknown";
+        const uploader = data.uploadedBy?.uid || "Unknown";
+        const name = data.uploadedBy?.displayName || data.uploaderName || "Anonymous";
+       
         counts[uploader] = (counts[uploader] || 0) + 1;
       });
 
@@ -46,7 +48,7 @@ const TopContributors = () => {
             {contributors.map(({ rank, uploader, count }) => (
               <motion.tr initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{duration:1,property:'easeInOut'}} key={uploader}>
                 <td>{rank}</td>
-                <td> <a href={`/profile/${uploader}`}>{uploader.name||"Anonymous"}</a></td>
+                <td> <a href={`/profile/${uploader}`}>{name||"Anonymous"}</a></td>
                 <td>{count}</td>
               </motion.tr>
             ))}

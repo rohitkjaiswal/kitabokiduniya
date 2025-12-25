@@ -3,12 +3,26 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebaseConfig";
 import { useAuth } from "../context/AuthContext";
-import {
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+
+const inputStyle = {
+  width: "100%",
+  border: "none",
+  borderBottom: "1.5px solid #ccc",
+  borderRadius: "0",
+  padding: "8px 4px",
+  fontSize: "15px",
+  backgroundColor: "transparent",
+  outline: "none",
+};
+
+const labelStyle = {
+  fontSize: "13px",
+  color: "#666",
+  marginBottom: "6px",
+  display: "block",
+};
 
 const EditProfile = () => {
   const { user } = useAuth();
@@ -18,30 +32,25 @@ const EditProfile = () => {
     displayName: "",
     bio: "",
     photoURL: "",
-    email:'',
-    dob:'',
-    currentReading:'',
-
-
+    email: "",
+    dob: "",
+    currentReading: "",
   });
+
   const [loading, setLoading] = useState(true);
 
-  // Fetch current profile data
   useEffect(() => {
     if (!user) return;
 
     const fetchProfile = async () => {
       try {
-        const userRef = doc(db, "users", user.uid);
-        const snap = await getDoc(userRef);
+        const ref = doc(db, "users", user.uid);
+        const snap = await getDoc(ref);
         if (snap.exists()) {
-          setFormData((prev) => ({
-            ...prev,
-            ...snap.data(),
-          }));
+          setFormData({ ...formData, ...snap.data() });
         }
-      } catch (error) {
-        console.error("Error loading profile:", error);
+      } catch (err) {
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -50,124 +59,106 @@ const EditProfile = () => {
     fetchProfile();
   }, [user]);
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const userRef = doc(db, "users", user.uid);
-      await updateDoc(userRef, {
+      await updateDoc(doc(db, "users", user.uid), {
         displayName: formData.displayName,
         bio: formData.bio,
         photoURL: formData.photoURL,
+        currentReading: formData.currentReading,
+        dob: formData.dob,
         updatedAt: new Date(),
-        dob:new Date(),
-        currentReading:formData.currentReading,
-        
       });
-      alert("✅ Profile updated successfully!");
-      navigate(`/profile/${user.uid}`);
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      alert("❌ Failed to update profile.");
+
+      navigate(`/profile/`);
+    } catch (err) {
+      alert("Update failed");
     }
   };
 
-  if (!user) {
-    return <p className="text-center mt-6">🛑 Please login to edit your profile.</p>;
-  }
-
-  if (loading) {
-    return <p className="text-center mt-6">⏳ Loading profile...</p>;
-  }
+  if (!user) return <p className="text-center mt-5">Please login</p>;
+  if (loading) return <p className="text-center mt-5">Loading…</p>;
 
   return (
-    <div className="container-fluid mt-6 px-4 p-5 my-5" style={{color:"pink"}}>
-      <h2 className="text-2xl font-bold mb-4 text-center">✏️ Edit Profile</h2>
-      <form className="max-w-lg mx-auto" onSubmit={handleSave}>
-        <div className="mb-3 m-5">
-          <label className="form-label">Display Name</label>
+    <div className="container my-5" style={{ maxWidth: "520px" }}>
+      <h3 className="text-center mb-4 fw-semibold">Edit Profile</h3>
+
+      <form onSubmit={handleSave}>
+        {/* Display Name */}
+        <div className="mb-4">
+          <label style={labelStyle}>Display Name</label>
           <input
-            type="text"
-            className="form-control p-1 "
             name="displayName"
             value={formData.displayName}
             onChange={handleChange}
-            placeholder="Enter your name"
-           style={{color:'gray'}} autoFocus/>
+            style={inputStyle}
+          />
         </div>
 
-        <div className="mb-3 m-5">
-          <label className="form-label">Email</label>
+        {/* Email (read-only recommendation) */}
+        <div className="mb-4">
+          <label style={labelStyle}>Email</label>
           <input
-            type="email"
-            className="form-control p-3"
-            name="email"
             value={formData.email}
-            onChange={handleChange}
-            placeholder="Change email"
-           style={{color:'gray'}}  spellCheck='false'/>
+            style={{ ...inputStyle, color: "#999" }}
+            disabled
+          />
         </div>
 
-        <div className="mb-3 m-5">
-          <label className="form-label">Bio</label>
+        {/* Bio */}
+        <div className="mb-4">
+          <label style={labelStyle}>Bio</label>
           <textarea
-            className="form-control p-2"
             name="bio"
+            rows="3"
             value={formData.bio}
             onChange={handleChange}
-            placeholder="Write something about yourself..."
-            rows="3"
-          style={{color:'gray'}}/>
+            style={{ ...inputStyle, resize: "none" }}
+          />
         </div>
 
-        <div className="mb-3 m-5">
-          <label className="form-label">Date of birth</label>
+        {/* DOB */}
+        <div className="mb-4">
+          <label style={labelStyle}>Date of Birth</label>
           <input
             type="date"
-            className="form-control p-2"
             name="dob"
             value={formData.dob}
             onChange={handleChange}
-            
-          style={{color:'gray'}}/>
+            style={inputStyle}
+          />
         </div>
 
-        <div className="mb-3 m-5">
-          <label className="form-label">Profile Picture URL</label>
+        {/* Photo URL */}
+        <div className="mb-4">
+          <label style={labelStyle}>Profile Photo URL</label>
           <input
-            type="text"
-            className="form-control p-2"
             name="photoURL"
             value={formData.photoURL}
             onChange={handleChange}
-            placeholder="Paste image link"
-          style={{color:'gray'}}/>
+            placeholder="https://"
+            style={inputStyle}
+          />
         </div>
 
-        <div className="mb-3 m-5">
-          <label className="form-label">What are you reading currently?</label>
+        {/* Current Reading */}
+        <div className="mb-5">
+          <label style={labelStyle}>Currently Reading</label>
           <input
-            type="text"
-            className="form-control p-2"
             name="currentReading"
             value={formData.currentReading}
             onChange={handleChange}
-            placeholder="Write your current read"
-          style={{color:'gray'}}/>
+            style={inputStyle}
+          />
         </div>
 
-        
-          
-          
-
-
-        <button type="submit" className="btn btn-outline-secondary m-1 w-100" >
-          💾 Save Changes
+        <button className="btn btn-dark w-100 py-2">
+          Save Changes
         </button>
-       
       </form>
     </div>
   );

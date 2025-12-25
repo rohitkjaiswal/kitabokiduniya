@@ -9,6 +9,7 @@ import {
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import dp from "../assets/cover.webp"
+import Feeds from "./Feeds";
 
 const UserSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -93,6 +94,8 @@ const UserSearch = () => {
           !loading && <p className="text-center">No users found</p>
         )}
       </div>
+
+      <Feeds />
     </div>
   );
 };

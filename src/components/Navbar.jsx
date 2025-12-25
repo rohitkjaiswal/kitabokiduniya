@@ -1,168 +1,165 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { motion } from "motion/react";
 import { useState } from "react";
-import "./Navbar.module.css";
-import { Book } from "lucide-react";
-import BookLibrary from "./BookLibrary";
-import {easeInOut, motion} from 'motion/react'
 
 const Navbar = () => {
   const { user, logout } = useAuth();
-  // const [darkMode, setDarkMode] = useState(false);
-
-  // const toggleDarkMode = () => setDarkMode(!darkMode);
+  const [open, setOpen] = useState(false);
 
   return (
-    <nav
-      className='navbar navbar-expand-lg shadow-sm  px-4 py-3 justify-content-space-between'
-     >
-      <div className="container " >
-        <div>
-          <NavLink to="/" className="navbar-brand fw-bold fs-4 text-primary text-decoration-none">
-            Kitabi
-          </NavLink>
-        </div>
+    <>
+      {/* Top bar */}
+      <nav
+        className="d-flex align-items-center justify-content-between px-4 py-2 fixed-top "
+        style={{
+          backgroundColor: "#fff",
+          borderBottom: "1px solid rgba(0,0,0,0.08)",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+          zIndex: 1000,
+          textDecoration: "none",
+        }}
+      >
+        <NavLink
+          to="/"
+          className="fw-bold fs-4 text-decoration-none"
+          style={{ color: "#1e293b" }}
+        >
+          Kitabi
+        </NavLink>
+
         <button
-          className="navbar-toggler outline-none justify-content-end"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarContent"
-          aria-controls="navbarContent"
-          aria-expanded="false"
+          className="btn border-0"
+          onClick={() => setOpen(!open)}
           aria-label="Toggle navigation"
         >
           <div
-            className="rounded-circle bg-success text-white d-flex justify-content-center align-items-center me-2"
-            style={{ width: "32px", height: "32px", fontSize: "0.9rem" }}
-          >
-            {user?.displayName?.charAt(0).toUpperCase() || "B"}
-          </div>
+            style={{
+              width: 28,
+              height: 2,
+              background: "#1e293b",
+              marginBottom: 6,
+              transition: "0.3s",
+              transform: open ? "rotate(45deg) translateY(8px)" : "none",
+            }}
+          />
+          <div
+            style={{
+              width: 28,
+              height: 2,
+              background: "#1e293b",
+              transition: "0.3s",
+              opacity: open ? 0 : 1,
+            }}
+          />
+          <div
+            style={{
+              width: 28,
+              height: 2,
+              background: "#1e293b",
+              marginTop: 6,
+              transition: "0.3s",
+              transform: open ? "rotate(-45deg) translateY(-8px)" : "none",
+            }}
+          />
         </button>
+      </nav>
 
-        <div
-          className="collapse navbar-collapse justify-content-end outline-none text-decoration-none "
-          id="navbarContent"
+      {/* Overlay menu */}
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center"
+          style={{
+            background: "rgba(255,255,255,0.95)",
+            backdropFilter: "blur(6px)",
+            zIndex: 999,
+          }}
         >
-          <motion.ul initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{duration:2,property:'easeInOut'}} className="navbar-nav align-items-center gap-2 ">
-            {/* <li className="nav-item">
-              <button
-                onClick={toggleDarkMode}
-                className="btn btn-sm btn-outline-secondary"
-                title="Toggle Dark Mode"
-              >
-                {darkMode ? "🌞 Light" : "🌙 Dark"}
-              </button>
-            </li> */}
-
+          <ul className="list-unstyled text-center fs-5 fw-medium">
+            <li className="mb-3">
+              <NavLink to="/upload" className="nav-link custom-link text-decoration-none">
+                Upload Book
+              </NavLink>
+            </li>
+            <li className="mb-3">
+              <NavLink to="/miniLibrary" className="nav-link custom-link text-decoration-none">
+                My Library
+              </NavLink>
+            </li>
+            <li className="mb-3">
+              <NavLink to="/searchUser" className="nav-link custom-link text-decoration-none">
+                Find Readers
+              </NavLink>
+            </li>
+            <li className="mb-3">
+              <NavLink to="/about" className="nav-link custom-link text-decoration-none">
+                About Kitabi
+              </NavLink>
+            </li>
+            {user && (
+              <li className="mb-3">
+                <NavLink to="/profile" className="nav-link custom-link text-decoration-none">
+                  Profile
+                </NavLink>
+              </li>
+            )}
             {user ? (
-              <>
-                <motion.li initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{duration:2,property:'easeInOut'}} className="nav-item dropdown justify-content-end">
-                  <a
-                    className="nav-link dropdown-toggle d-flex align-items-center text-decoration-none"
-                    href="/profile"
-                    id="userDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <div
-                      className="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-2"
-                      style={{
-                        width: "32px",
-                        height: "32px",
-                        fontSize: "0.9rem",
-                      }}
-                    >
-                      {user.displayName?.charAt(0).toUpperCase() || "B"}
-                    </div>
-                    {user.displayName || "Bookist"}
-                  </a>
-                  <ul
-                    className="dropdown-menu dropdown-menu-end m-4 "
-                    aria-labelledby="userDropdown"
-                  >
-                    <li>
-                      <NavLink
-                        to="/profile"
-                        className="dropdown-item text-decoration-none"
-                      >
-                        👤 Profile
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink
-                        to="/upload"
-                        className="dropdown-item text-decoration-none"
-                      >
-                        ⬆️ Upload
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink
-                        to="/searchUser"
-                        className="dropdown-item text-decoration-none"
-                      >
-                        🔍 Search Users
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink
-                        to="/miniLibrary"
-                        className="dropdown-item text-decoration-none"
-                      >
-                        📚 Your Library
-                      </NavLink>
-                    </li>
-
-                    <li>
-                      <NavLink
-                        to="/about"
-                        className="dropdown-item text-decoration-none"
-                      >
-                        Know about kitabi
-                      </NavLink>
-                    </li>
-
-
-
-                    <hr />
-                    <li>
-                      <button
-                        onClick={logout}
-                        className="dropdown-item text-danger text-decoration-none"
-                      >
-                        🚪 Logout
-                      </button>
-                    </li>
-                  </ul>
-                </motion.li>
-              </>
+              <li>
+                <button
+                  onClick={logout}
+                  className="btn btn-outline-dark px-4 py-2"
+                >
+                  Logout
+                </button>
+              </li>
             ) : (
               <>
-                <motion.div initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{duration:2,property:'easeInOut'}} className="container d-flex flex-direction-column">
-                  <li className="nav-item ">
-                    <NavLink
-                      to="/login"
-                      className="btn btn-sm btn-outline-secondary text-decoration-none m-2"
-                    >
-                      🔑 Login
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink
-                      to="/register"
-                      className="btn btn-sm btn-outline-secondary text-decoration-none m-2"
-                    >
-                      ✍️ Register
-                    </NavLink>
-                  </li>
-                </motion.div>
+                <li className="mb-2">
+                  <NavLink to="/login" className="btn btn-outline-dark px-4 py-2">
+                    Login
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/register" className="btn btn-dark px-4 py-2">
+                    Register
+                  </NavLink>
+                </li>
               </>
             )}
-          </motion.ul>
-        </div>
-      </div>
-    </nav>
+          </ul>
+        </motion.div>
+      )}
+
+      {/* Hover effect styling */}
+      <style>
+        {`
+          .custom-link {
+            color: #1e293b;
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+          }
+          .custom-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0%;
+            height: 2px;
+            background: #1e293b;
+            transition: width 0.3s ease;
+          }
+          .custom-link:hover::after {
+            width: 100%;
+          }
+          .custom-link:hover {
+            transform: translateX(4px);
+          }
+        `}
+      </style>
+    </>
   );
 };
 

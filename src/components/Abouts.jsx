@@ -1,85 +1,133 @@
 import React from "react";
-import "./AboutUs.css"; // optional if you want custom styling
+import "./AboutUs.css";
 
 const AboutUs = () => {
   return (
-    <> 
-      <div className="container-fluid mt-5 mb-5 p-5" >
-       
+    <div className="container-fluid mt-5 mb-5 p-5 about-us">
+      {/* Title */}
+      <h1 className="text-center mb-5 fw-bold">About Us – Kitabo ki Duniya</h1>
 
-      <h1 className="text-center mb-4">📖 About Us – Kitabo ki Duniya</h1>
-
-      <div className="mb-4" >
-        <h4>👋 Who are we?</h4>
+      {/* Who we are */}
+      <section className="mb-5">
+        <h3 className="fw-semibold">Who We Are</h3>
         <p>
-          Welcome to <strong>Kitabo ki Duniya</strong> – a virtual bookland where imagination runs wild,
-          characters live rent-free in your head, and PDFs are your best friends (after chai, of course ☕).
+          Welcome to <strong>Kitabo ki Duniya</strong> – a digital library built
+          for readers who value imagination, knowledge, and accessibility. This
+          platform was created by a passionate developer and book enthusiast,
+          with the vision of bringing literature closer to everyone in a modern,
+          user-friendly way.
         </p>
         <p>
-          Created by a passionate bookworm (yes, that’s me 😎), this platform is a labor of love — love for
-          literature, Indian classics, and the satisfaction of finishing a book at 3 AM.
+          We are more than just a repository of PDFs. We are a growing
+          community, a place where stories meet technology, and where readers
+          can discover, share, and enjoy books without distractions.
         </p>
-      </div>
+      </section>
 
-      <div className="mb-4">
-        <h4>📚 What do we offer?</h4>
+      {/* What we offer */}
+      <section className="mb-5">
+        <h3 className="fw-semibold">What We Offer</h3>
         <ul>
-          <li>✨ A collection of handpicked <strong>fiction & non-fiction</strong> books in PDF form</li>
-          <li>🖋️ Featured sections on legendary authors like <strong>Kabir Sahab</strong> and <strong>Premchand</strong></li>
-          <li>🔍 Genre-based exploration — so you find what fits your reading mood (even your 2-minute moods)</li>
-          <li>🚪 Access-controlled PDFs (you gotta log in, we’re not a public library 😅)</li>
+          <li>A curated collection of fiction and non-fiction books in digital format</li>
+          <li>Featured sections on legendary authors such as Kabir and Premchand</li>
+          <li>Genre-based exploration for personalized reading experiences</li>
+          <li>Access-controlled resources to ensure quality and accountability</li>
+          <li>Educational materials for students and lifelong learners</li>
+          <li>Community-driven recommendations and reviews</li>
         </ul>
-      </div>
+      </section>
 
-      <div className="mb-4">
-        <h4>🚀 Our Mission</h4>
+      {/* Mission */}
+      <section className="mb-5">
+        <h3 className="fw-semibold">Our Mission</h3>
         <p>
-          To make reading fun again. Not just for toppers and literature majors, but for anyone who’s ever
-          wanted to escape into another world, learn something new, or just feel smart while scrolling.
+          Our mission is to make reading enjoyable and accessible for everyone —
+          from casual readers to dedicated scholars. We aim to revive the joy of
+          reading by combining timeless literature with modern technology.
         </p>
-        <p>
-          We believe in <strong>free access to knowledge</strong>, but also believe in keeping bots, freeloaders,
-          and sleepy readers accountable with a login wall 😴.
-        </p>
-      </div>
+      </section>
 
-      <div className="mb-4">
-        <h4>🔐 Why trust us?</h4>
+      {/* Vision */}
+      <section className="mb-5">
+        <h3 className="fw-semibold">Our Vision</h3>
         <p>
-          We don’t collect your data. We don’t care what genre you like (even if it’s vampire romance 💔🧛). We just
-          want you to find your next favorite book without distractions or pop-up ads promising free iPhones.
+          To become India’s most trusted and loved digital library, bridging the
+          gap between traditional literature and modern digital platforms. We
+          envision a space where every reader finds something that inspires,
+          educates, or entertains.
         </p>
-      </div>
+      </section>
 
-      <div className="mb-4">
-        <h4>🧑‍💻 Behind the scenes</h4>
-        <p>
-          This site is built with React, heart, and a lot of caffeine. I’m a solo dev who loves good UI, good
-          stories, and good memes.
-        </p>
-        <p>
-          If you enjoy this platform, consider sharing it with a fellow book-lover or chai-drinker.
-        </p>
-      </div>
+      {/* Values */}
+      <section className="mb-5">
+        <h3 className="fw-semibold">Our Core Values</h3>
+        <ul>
+          <li><strong>Knowledge:</strong> Books are the foundation of learning.</li>
+          <li><strong>Community:</strong> Readers grow together through shared experiences.</li>
+          <li><strong>Creativity:</strong> Every story is a spark for imagination.</li>
+          <li><strong>Trust:</strong> We respect your privacy and ensure a safe environment.</li>
+          <li><strong>Innovation:</strong> Constantly evolving with modern technology.</li>
+        </ul>
+      </section>
 
-      <div className="mb-4">
-        <h4>📮 Get in touch</h4>
+      {/* Community */}
+      <section className="mb-5">
+        <h3 className="fw-semibold">Our Community</h3>
         <p>
-          Have feedback, book suggestions, or just want to say hi? Reach out at:{" "}
-          <br />Eamil :  
-          <a href="mailto:rohitkumarj243@gmail.com"> kitabiTouch@gmail.com</a>
+          Kitabo ki Duniya is not just a platform, but a community of readers,
+          writers, and learners. We encourage discussions, host recommendations,
+          and celebrate the joy of reading together. Future plans include forums,
+          contests, and book clubs to connect readers worldwide.
+        </p>
+      </section>
+
+      {/* Roadmap */}
+      <section className="mb-5">
+        <h3 className="fw-semibold">Future Roadmap</h3>
+        <ul>
+          <li>Mobile application for seamless reading on the go</li>
+          <li>Audio versions of selected books</li>
+          <li>Gamified reading challenges and achievement badges</li>
+          <li>Multilingual support for regional and global literature</li>
+          <li>Personalized analytics for tracking reading habits</li>
+        </ul>
+      </section>
+
+      {/* Contact */}
+      <section className="mb-5">
+        <h3 className="fw-semibold">Get in Touch</h3>
+        <p>
+          We welcome feedback, suggestions, and collaborations. Reach out to us:
+        </p>
+        <p>
+          <strong>Email:</strong>{" "}
+          <a href="mailto:kitabiTouch@gmail.com">kitabiTouch@gmail.com</a>
           <br />
-          Instagram : <a href="">kitabiOfficial</a> 
+          <strong>Instagram:</strong> <a href="#">kitabiOfficial</a>
           <br />
-          Whatsapps : <a href="">kitabiTouchCommunity</a> <br />
-          Or scream your favorite book quote into the void — I’ll probably hear it. 📢
+          <strong>WhatsApp:</strong> <a href="#">kitabiTouchCommunity</a>
         </p>
-      </div>
+      </section>
 
-      <div className="text-center mt-5">
-        <p>Made with ❤️ for books, chai, and people who read till 4 AM.</p>
-      </div>
-    </div></>
+      {/* Acknowledgements */}
+      <section className="mb-5">
+        <h3 className="fw-semibold">Acknowledgements</h3>
+        <p>
+          We extend our gratitude to every reader who has joined us on this
+          journey. Your support fuels our growth. Special thanks to the
+          open-source community, fellow developers, and everyone who believes in
+          the power of books.
+        </p>
+      </section>
+
+      {/* Footer */}
+      <footer className="text-center mt-5">
+        <p>
+          Made with dedication for readers and learners. <br />
+          © {new Date().getFullYear()} Kitabo ki Duniya. All rights reserved.
+        </p>
+      </footer>
+    </div>
   );
 };
 

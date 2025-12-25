@@ -2,126 +2,200 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
-import { doc, setDoc, serverTimestamp, Timestamp } from "firebase/firestore";
-import cover from "../assets/cover.webp"
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import cover from "../assets/cover.webp";
 
 const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { register } = useAuth();
+  const { register, googleLogin } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    displayName: "",
+    gender: "",
+    dob: "",
+  });
+
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  /* ---------- CREATE USER DOC (COMMON) ---------- */
+  const createUserProfile = async (user, provider) => {
+    await setDoc(doc(db, "users", user.uid), {
+      email: user.email,
+      displayName:
+        form.displayName || user.displayName || user.email.split("@")[0],
+      photoURL: user.photoURL || "",
+      gender: form.gender || "",
+      dob: form.dob || "",
+      bio: "",
+      currentReading: "",
+      authProvider: provider,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+  };
+
+  /* ---------- EMAIL REGISTER ---------- */
+  const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
-      // 1️⃣ Create user in Firebase Auth
-      const userCredential = await register(email, password);
-      const user = userCredential.user;
+      const cred = await register(form.email, form.password);
+      await createUserProfile(cred.user, "password");
       navigate("/");
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      // 2️⃣ Create user profile in Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        email: user.email,
-        displayName: user.email.split("@")[0], // default name
-        favorites: [],   // empty list for fav books
-        readLater: [],   // empty list for read-later
-        createdAt: serverTimestamp(),
-        bio:'',
-        updatedAt:serverTimestamp(),
-        gender:'',
-        dob: '',
-        currentReading:'',
-
-      });
-
-      // 3️⃣ Redirect
+  /* ---------- GOOGLE REGISTER ---------- */
+  const handleGoogle = async () => {
+    setLoading(true);
+    try {
+      const cred = await googleLogin();
+      await createUserProfile(cred.user, "google");
       navigate("/");
-    } catch (error) {
-      alert(error.message);
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "400px",
-        margin: "auto",
-        padding: "20px",
-        boxShadow: "10px 10px 20px rgba(0,0,0,0.1)",
-        backgroundColor: "#f9f9f9",
-        borderRadius: "10px",
-        alignSelf: "center",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <img
-        src={cover}
-        alt="Register Icon"
-        style={{
-          width: "70px",
-          height: "70px",
-          filter: "drop-shadow(10px 10px 20px rgba(0,0,0,0.1))",
-        }}
-      />
+    <div className="auth-card">
+      <img src={cover} alt="logo" className="auth-logo" />
 
-      <h2 style={{ textAlign: "center" }}>Register</h2>
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-      >
-        <input
-          type="email"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{
-            width: "95%",
-            padding: "10px",
-            margin: "5px 0",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-            fontSize: "16px",
-            boxShadow: "5px 5px 20px rgba(47, 138, 196, 0.1)",
-          }}
-        />
+      <h4 className="text-center mb-3">
+        {step === 1 ? "Create account" : "Complete profile"}
+      </h4>
 
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{
-            width: "95%",
-            padding: "10px",
-            margin: "5px 0",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-            fontSize: "16px",
-            boxShadow: "5px 5px 20px rgba(47, 138, 196, 0.1)",
-          }}
-        />
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "16px",
-            boxShadow: "5px 5px 20px rgba(47, 138, 196, 0.1)",
-          }}
-        >
-          Register
-        </button>
-      </form>
-      <p style={{ marginTop: "10px" }}>
+      {/* STEP 1 */}
+      {step === 1 && (
+        <>
+          <input
+            className="input-underline"
+            placeholder="Email"
+            name="email"
+            type="email"
+            onChange={handleChange}
+            required
+          />
+
+          <input
+            className="input-underline mt-3"
+            placeholder="Password"
+            name="password"
+            type="password"
+            onChange={handleChange}
+            required
+          />
+
+          <button
+            className="btn btn-dark w-100 mt-4"
+            onClick={() => setStep(2)}
+          >
+            Continue
+          </button>
+
+          <div className="divider">or</div>
+
+          <button
+            className="btn btn-outline-dark w-100"
+            onClick={handleGoogle}
+            disabled={loading}
+          >
+            Continue with Google
+          </button>
+        </>
+      )}
+
+      {/* STEP 2 */}
+      {step === 2 && (
+        <form onSubmit={handleRegister}>
+          <input
+            className="input-underline"
+            placeholder="Display name"
+            name="displayName"
+            onChange={handleChange}
+          />
+
+          <select
+            className="input-underline mt-3"
+            name="gender"
+            onChange={handleChange}
+          >
+            <option value="">Gender (optional)</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+
+          <input
+            type="date"
+            className="input-underline mt-3"
+            name="dob"
+            onChange={handleChange}
+          />
+
+          <button
+            className="btn btn-dark w-100 mt-4"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Creating…" : "Finish"}
+          </button>
+        </form>
+      )}
+
+      <p className="text-center mt-3">
         Already have an account? <a href="/login">Login</a>
       </p>
+
+      {/* STYLES */}
+      <style>{`
+        .auth-card {
+          max-width: 420px;
+          margin: 80px auto;
+          padding: 30px;
+          background: #fff;
+          border-radius: 16px;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .auth-logo {
+          width: 70px;
+          display: block;
+          margin: 0 auto 10px;
+        }
+
+        .input-underline {
+          width: 100%;
+          border: none;
+          border-bottom: 2px solid #ddd;
+          padding: 10px 4px;
+          font-size: 15px;
+        }
+
+        .input-underline:focus {
+          outline: none;
+          border-bottom-color: #000;
+        }
+
+        .divider {
+          text-align: center;
+          margin: 15px 0;
+          color: #999;
+        }
+      `}</style>
     </div>
   );
 };

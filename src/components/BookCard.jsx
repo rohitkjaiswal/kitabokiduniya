@@ -1,144 +1,177 @@
 import { useState } from "react";
-import { Card, CardContent } from "./Card";
-import { MoreVertical } from "lucide-react";
-import BookMenu from "./BookMenu";
-import { color, easeInOut } from "framer-motion";
-import userBg from "../assets/userdp.jpg";
-import cover from "../assets/cover.webp";
-import { div } from "framer-motion/client";
+import { MoreVertical, Download, BookOpen, Share2 } from "lucide-react";
 import { motion } from "motion/react";
+import BookMenu from "./BookMenu";
+import cover from "../assets/cover.webp";
+import { useAuth } from "../context/AuthContext";
+import Navbar from "./Navbar";
+import { NavLink } from "react-router-dom";
 
 const BookCard = ({
   book,
   onFavorite,
   onReadLater,
   onDelete,
-  onShare,
   onMessage,
   isOwner,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const { user } = useAuth();
+
   if (!book) return null;
 
-   const handleShare = (book) => {
-  if (navigator.share) {
-    navigator.share({
+  const handleShare = async () => {
+    const payload = {
       title: book.title,
-      text: `Check out this book: ${book.title} by ${book.author}`,
+      text: `📘 ${book.title} by ${book.author}`,
       url: book.link || window.location.href,
-    })
-    .then(() => console.log("Shared successfully"))
-    .catch((error) => console.error("Error sharing:", error));
-  } else {
-    alert("Sharing is not supported on this device.");
-  }
-};
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(payload);
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      navigator.clipboard.writeText(payload.url);
+      alert("🔗 Link copied to clipboard");
+    }
+  };
 
   return (
-
-    <motion.div key={book.id}  initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{duration:1,property:'easeInOut'}} className="col-md-6 col-lg-4 mb-4">
+    <motion.div
+      className="col-md-6 col-lg-4 mb-4"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
       <div
-        className="card h-100 text-white shadow-sm border-0"
-        style={{
-          backgroundImage: `url(${book.coverPage || cover})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          borderRadius: "12px",
-          overflow: "hidden",
-        }}
+        className="card h-100 border-0 shadow-lg text-white position-relative overflow-hidden"
+        style={{ borderRadius: "16px" }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
       >
+        {/* Book Image */}
         <div
-          className="card-body"
+          className="position-relative"
           style={{
-            backgroundColor: "rgba(0, 0, 0, 0.6)",
-            padding: "1rem",
-            height: "100%",
+            backgroundImage: `url(${book.coverPage || cover})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "250px",
+            borderRadius: "16px 16px 0 0",
           }}
         >
-          <h5
-            className="card-title d-flex"
-            style={{
-              fontWeight: "bold",
-              textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-              color: "pink",
-            }}
-          >
-            {book.title || "Unknown Title"}
-            <div className="end-0 position-absolute">
-              <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="btn btn-sm btn-outline-none  text-white"
-                title="Options"
+          {/* Overlay on hover */}
+          {hovered && (
+            <motion.div
+              className="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center gap-2"
+              style={{
+                background: "rgba(0,0,0,0.6)",
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <a
+                href={book.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-light btn-sm w-75"
               >
-                <MoreVertical size={28} />
+                <Download size={16} className="me-1" /> Download
+              </a>
+              <button className="btn btn-light btn-sm w-75">
+                <BookOpen size={16} className="me-1" /> Read
               </button>
-              {menuOpen && (
-                <div className="position-absolute end-0 z-3">
-                  <BookMenu
-                    isOwner={isOwner}
-                    onFavorite={() => onFavorite(book)}
-                    onReadLater={() => onReadLater(book)}
-                    onDelete={() => onDelete(book)}
-                    onShare={() => handleShare(book)}
-                    onMessage={() => onMessage(book)}
-                  />
-                </div>
-              )}
-            </div>
-          </h5>
-          <p className="card-text">
-            <strong>Author:</strong> {book.author || "Unknown"}
-          </p>
-
-          <p className="card-text">
-            <strong>Genre:</strong> {book.genre || "Various"}
-          </p>
-          {book.description && (
-            <p className="card-text">
-              {book.description || "No description available."}
-            </p>
+              <button
+                className="btn btn-outline-light btn-sm w-75"
+                onClick={handleShare}
+              >
+                <Share2 size={16} /> Share
+              </button>
+            </motion.div>
           )}
-          <p>
-            <a
-              href={book.link}
-              className="btn btn-outline-light btn-sm mt-2"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Download
-            </a>
-
-            <button
-              className="btn btn-outline-light btn-sm mt-2 ms-2"
-              onClick={() => alert(`You chose to read: ${book.title}`)}
-            >
-              Read
-            </button>
-            <button
-              className="btn btn-outline-light btn-sm mt-2 ms-2"
-              onClick={onShare}
-            >
-              share
-            </button>
-          </p>
-          <p style={{ color: "rgba(22, 243, 29, 0.7)" }}>
-            <small>
-              Say thanks to:{" "}
-              <a href={`mailto:${book.uploaderEmail}`} className="text-light">
-                {book.uploaderEmail || "Unknown Contributor"}
-              </a>{" "}
-              for sharing this book.
-            </small>
-            visit contributor's profile{" "}
-            <a href={`/profile/${book.uploadedBy}`} className="text-light">
-              here
-            </a>
-            
-          </p>
         </div>
+
+       {/* Book Details */}
+<div className="card-body d-flex flex-column justify-content-between">
+  {/* Header: Title + Menu */}
+  <div className="d-flex justify-content-between align-items-start mb-2">
+    <h5 className="fw-bold mb-0 text-dark" style={{ lineHeight: 1.3 }}>
+      {book.title}
+    </h5>
+
+    {user && (
+    <button
+      className="btn btn-sm btn-link text-muted"
+      onClick={() => setMenuOpen(!menuOpen)}
+    >
+      <MoreVertical />
+    </button>
+    )}
+  </div>
+    
+  {/* Dropdown Menu */}
+  {menuOpen && (
+    <div className="w-100 mt-2">
+      <BookMenu
+        isOwner={isOwner}
+        onFavorite={() => onFavorite(book)}
+        onReadLater={() => onReadLater(book)}
+        onDelete={() => onDelete(book)}
+        onShare={handleShare}
+        onMessage={() => onMessage(book)}
+      />
+    </div>
+  )}
+
+  {/* Meta Info */}
+  <div className="d-flex flex-wrap gap-2 mb-3">
+    <span className="badge bg-light text-dark">
+      <NavLink
+        to={`/author/${book.author}`}
+        className="text-decoration-none text-dark"
+      >
+        ✍️ {book.authorId || "Unknown"}
+      </NavLink>
+    </span>
+    <span className="badge bg-secondary">
+      {book.genre || "General"}
+    </span>
+  </div>
+
+  {/* Description */}
+  {book.description && (
+    <p
+      className="small text-muted mb-3"
+      style={{
+        display: "-webkit-box",
+        WebkitLineClamp: 3,
+        WebkitBoxOrient: "vertical",
+        overflow: "hidden",
+      }}
+    >
+      {book.description}
+    </p>
+  )}
+
+  {/* Footer */}
+  <div className="border-top pt-2 small text-muted">
+    Shared by{" "}
+    <a
+      href={`/profile/${book.uploadedBy?.uid}`}
+      className="text-decoration-none fw-semibold"
+    >
+      {book.uploadedBy?.name || "Contributor"}
+    </a>
+  </div>
+</div>
       </div>
     </motion.div>
-
   );
 };
 
