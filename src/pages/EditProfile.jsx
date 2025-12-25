@@ -5,6 +5,7 @@ import { db } from "../firebaseConfig";
 import { useAuth } from "../context/AuthContext";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 
 const inputStyle = {
   width: "100%",
@@ -81,7 +82,7 @@ const EditProfile = () => {
   };
 
   if (!user) return <p className="text-center mt-5">Please login</p>;
-  if (loading) return <p className="text-center mt-5">Loading…</p>;
+  if (loading) return <Loading />;
 
   return (
     <div className="container my-5" style={{ maxWidth: "520px" }}>

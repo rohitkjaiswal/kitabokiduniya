@@ -25,7 +25,7 @@ const Patrika = () => {
   }, []);
 
   return (
-    <motion.div initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{duration:2,property:'easeInOut'}} className={styles.wrapper}>
+    <motion.div initial={{opacity:0}} whileInView={{opacity:1}} transition={{duration:2,property:'easeInOut'}} className={styles.wrapper}>
       <h2 className={styles.title} style={{ fontSize: "2rem", marginBottom: "1rem", color: "purple" }}> Messages for You</h2>
 
       <AnimatePresence mode="wait">

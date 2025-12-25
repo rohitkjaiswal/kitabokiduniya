@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import pf from "../assets/pf.webp"
 import Feeds from "./Feeds";
 import {
   collection,
@@ -22,6 +23,14 @@ function PreHome() {
   const [loading, setLoading] = useState(true);
 
   const LATEST_AUTHORS_LIMIT = 6;
+
+  const slugify = (str) =>
+  str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")   // remove special chars
+    .replace(/\s+/g, "-");      // replace spaces with hyphen
+
 
   useEffect(() => {
     const loadAuthors = async () => {
@@ -52,7 +61,7 @@ function PreHome() {
       {/* AUTHORS SECTION */}
       <section className="container py-5">
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <h2 className="fw-bold">🖋️ Featured Authors</h2>
+          <h2 className="fw-bold"> Featured Authors</h2>
           <Link to="/authors" className="text-decoration-none">
             View all →
           </Link>
@@ -68,23 +77,24 @@ function PreHome() {
               <motion.div
                 key={a.id}
                 className="col-md-4 mb-4"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
               >
+                
                 <Link
-                  to={`/author/${encodeURIComponent(a.name)}`}
+                  to={`/author/${slugify(a.name)}`}
                   className="text-decoration-none"
                 >
                   <div className="card border-0 shadow-sm h-100">
                     <img
-                      src={a.photo}
+                      src={a.photo ||pf }
                       alt={a.name}
                       loading="lazy"
                       style={{ height: 250, objectFit: "cover" }}
                     />
                     <div className="card-body text-center">
                       <h6 className="fw-semibold text-dark">{a.name}</h6>
+                      <p className="text-muted">{a.views || 0} views , {a.booksCount || 0} books , {a.ratingAvg || 0} rating</p>
                     </div>
                   </div>
                 </Link>

@@ -34,7 +34,7 @@ const TopContributors = () => {
 
   return (
     <div className="container py-5">
-      <motion.h3 initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{duration:2,property:'easeInOut'}} className="text-center fw-bold text-primary mb-4">🏆 Top 10 Contributors This Week</motion.h3>
+      <motion.h3 initial={{opacity:0}} whileInView={{opacity:1}}  className="text-center fw-bold text-primary mb-4">🏆 Top 10 Contributors This Week</motion.h3>
       <div className="table-responsive">
         <table className="table table-bordered table-hover shadow-sm">
           <thead className="table-light">
@@ -46,7 +46,7 @@ const TopContributors = () => {
           </thead>
           <tbody>
             {contributors.map(({ rank, uploader, count }) => (
-              <motion.tr initial={{opacity:0,x:-100}} whileInView={{opacity:1,x:0}} transition={{duration:1,property:'easeInOut'}} key={uploader}>
+              <motion.tr initial={{opacity:0}} whileInView={{opacity:1,x:0}}  key={uploader}>
                 <td>{rank}</td>
                 <td> <a href={`/profile/${uploader}`}>{name||"Anonymous"}</a></td>
                 <td>{count}</td>

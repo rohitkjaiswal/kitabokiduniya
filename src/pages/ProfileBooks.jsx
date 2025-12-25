@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebaseConfig";
+import { useNavigate } from "react-router-dom";
 import {
   collection,
   query,
@@ -28,6 +29,7 @@ const TABS = {
 };
 
 const ProfileBooks = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [profile, setProfile] = useState(null);
 

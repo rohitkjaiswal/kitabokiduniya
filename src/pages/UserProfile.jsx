@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 import {
   getDoc,
   doc,
@@ -56,7 +57,7 @@ const UserProfile = () => {
   }, [userId]);
 
   if (loading) {
-    return <div className="text-center py-5">Loading profile…</div>;
+    return <Loading />;
   }
 
   if (!profileUser) {
@@ -70,7 +71,7 @@ const UserProfile = () => {
         <img
           src={profileUser.photoURL || cover}
           alt="avatar"
-          className="profile-avatar"
+          className="profile-avatar" 
         />
 
         <h4 className="mt-3">{profileUser.displayName || "Anonymous"}</h4>
@@ -83,6 +84,7 @@ const UserProfile = () => {
           <span>
             <strong>{books.length}</strong> Books
           </span>
+          <p>feedback :{profileUser.email||""}</p>
         </div>
       </div>
 

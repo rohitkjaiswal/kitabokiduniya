@@ -43,7 +43,7 @@ const CreativeHero = () => {
 
   return (
     <div
-      className="container-fluid vh-100 w-full   position-relative overflow-hidden d-flex justify-content-center align-items-center p-2 mt-2"
+      className="container bg-lg-none vh-100 w-full   position-relative overflow-hidden d-flex justify-content-center align-items-center p-2 mt-2"
       style={{ background: bgGradient }}
     >
       {/* Overlay */}

@@ -15,7 +15,7 @@
 }
 
 .patrikaBox {
-    width: 400px;
+    width: auto;
     padding: 2rem;
     background: #fff9f0;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);

@@ -77,14 +77,14 @@ const Feeds = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
         >
-          <h6 className="fw-bold">{p.title || "Untitled"}</h6>
+          <h6 className="fw-bold text-success">{p.title || "Untitled"}</h6>
           <p className="preview clamp-2">{p.preview}</p>
 
           <button
             className="see-more"
             onClick={() => navigate(`/post/${p.id}`)}
           >
-            See more
+            Read more
           </button>
 
           <div className="meta">

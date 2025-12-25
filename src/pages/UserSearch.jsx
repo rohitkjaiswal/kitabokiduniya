@@ -1,6 +1,7 @@
 // src/components/UserSearch.jsx
 import React, { useState } from "react";
 import { db } from "../firebaseConfig";
+import Loading from "../components/Loading";
 import {
   collection,
   query,
@@ -48,7 +49,7 @@ const UserSearch = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">🔍 Search Users</h2>
+      <h2 className="text-center mb-4" style={{marginTop:'10px'}}> Search Users</h2>
 
       <form onSubmit={handleSearch} className="d-flex mb-3">
         <input
@@ -63,7 +64,7 @@ const UserSearch = () => {
         </button>
       </form>
 
-      {loading && <p>⏳ Searching...</p>}
+      {loading && <Loading />}
 
       <div className="row">
         {results.length > 0 ? (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BookList from "../components/BookList";
+import img from "../assets/pf.webp"
 import {
   doc,
   getDoc,
@@ -15,6 +16,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { Book } from "lucide-react";
+import Loading from "../components/Loading";
 
 const AuthorDetail = () => {
   const { slug } = useParams();
@@ -104,27 +106,28 @@ const AuthorDetail = () => {
     setRating(5);
   };
 
-  if (!author) return <div className="container py-5">Loading…</div>;
+  if (!author) return <Loading />;
 
   return (
     <div className="container py-5">
       {/* AUTHOR HEADER */}
       <div className="row mb-4">
-        <div className="col-md-4">
-          <img src={author.photo} className="img-fluid rounded shadow-sm" />
+        <div className="col-md-4 ">
+          <img src={author.photo || img} className="img-fluid rounded shadow-sm" />
         </div>
         <div className="col-md-8">
-          <h2>{author.name}</h2>
+          <h2 style={{color:'darkblue',fontWeight:'bold'}}>{author.name}</h2>
           <p className="text-muted">{author.bio}</p>
 
           <p>
-        <span className="text-muted">Likes</span> {author.likes || 0} · <span className="text-muted">views</span> {author.views} · <span className="text-muted">rating</span> {(author.ratingAvg || 0).toFixed(1)}
+        <span className="text-muted">Likes</span> {author.likes || 0} ,  <span className="text-muted">views</span> {author.views} ,  <span className="text-muted">rating</span> {(author.ratingAvg || 0).toFixed(1)}
           </p>
           <p>{author.bio}</p>
+          <p className="text-muted">Books Count: {author.booksCount || 0}</p>
 
           <button
             onClick={likeAuthor}
-            className="btn btn-outline-primary btn-sm"
+            className="btn btn-outline-primary btn-sm "
           >
             Like Author
           </button>
