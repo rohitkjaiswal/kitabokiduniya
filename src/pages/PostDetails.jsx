@@ -68,6 +68,10 @@ const PostDetails = () => {
     load();
   }, [id]);
 
+ 
+
+
+
   /* ---------- SHARE ---------- */
   const handleShare = async () => {
     try {
@@ -195,7 +199,7 @@ const PostDetails = () => {
       {/* ================= HIDDEN SHARE CARD ================= */}
       <div ref={shareRef} className="share-card">
         <div className="share-header">
-          <img src={post.author.photoURL} className="share-avatar" />
+          <img src={post.author.uid?.photoURL} className="share-avatar" />
           <div>
             <h1>{post.title}</h1>
             <p>{post.author.name}</p>
@@ -206,7 +210,7 @@ const PostDetails = () => {
         <div className="share-content">{post.content}</div>
 
         <div className="share-footer">
-          <span>Shared by {user?.name || "Reader"}</span>
+          <span>Shared by {user?.displayName || "Reader"}</span>
           <canvas ref={qrRef}></canvas>
         </div>
 

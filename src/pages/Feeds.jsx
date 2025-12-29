@@ -58,6 +58,7 @@ const Feeds = () => {
       author: {
         uid: user.uid,
         name: user.displayName || "Anonymous",
+        photoURL: user.photoURL || "",
       },
       createdAt: serverTimestamp(),
     });
@@ -94,8 +95,9 @@ const Feeds = () => {
         </motion.div>
       ))}
 
+
       {/* Floating Add Button */}
-      <button className="fab" onClick={() => setShowModal(true)}>+</button>
+      {user && <button className="fab" onClick={() => setShowModal(true)}>+</button>}
 
       {/* Modal */}
       {showModal && (
